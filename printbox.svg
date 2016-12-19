@@ -1,0 +1,36 @@
+<svg viewBox="0 0 910 610"
+    xmlns="http://www.w3.org/2000/svg">
+
+  <!-- top left -->
+  <line x1="30" y1="0" x2="30" y2="30" stroke-width="3" stroke="white"/>
+  <line x1="30" y1="0" x2="30" y2="30" stroke-width="1" stroke="black"/>
+
+ <!-- left top -->
+  <line x1="0" y1="30" x2="30" y2="30" stroke-width="3" stroke="white"/>
+  <line x1="0" y1="30" x2="30" y2="30" stroke-width="1" stroke="black"/>
+
+  <!-- top right -->
+  <line x1="880" y1="0" x2="880" y2="30" stroke-width="3" stroke="white"/>
+  <line x1="880" y1="0" x2="880" y2="30" stroke-width="1" stroke="black"/>
+
+  <!-- right top -->
+  <line x1="880" y1="30" x2="910" y2="30" stroke-width="3" stroke="white"/>
+  <line x1="880" y1="30" x2="910" y2="30" stroke-width="1" stroke="black"/>
+
+  <!-- bottom left -->
+  <line x1="30" y1="610" x2="30" y2="580" stroke-width="3" stroke="white"/>
+  <line x1="30" y1="610" x2="30" y2="580" stroke-width="1" stroke="black"/>
+
+  <!-- left bottom -->
+  <line x1="0" y1="580" x2="30" y2="580" stroke-width="3" stroke="white"/>
+  <line x1="0" y1="580" x2="30" y2="580" stroke-width="1" stroke="black"/>
+
+  <!-- bottom right -->
+  <line x1="880" y1="610" x2="880" y2="580" stroke-width="3" stroke="white"/>
+  <line x1="880" y1="610" x2="880" y2="580" stroke-width="1" stroke="black"/>
+
+  <!-- right bottom -->
+  <line x1="880" y1="580" x2="910" y2="580" stroke-width="3" stroke="white"/>
+  <line x1="880" y1="580" x2="910" y2="580" stroke-width="1" stroke="black"/>
+
+</svg>

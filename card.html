@@ -1,0 +1,254 @@
+<html>
+<head>
+<script src="qrcode.min.js"></script>
+<script>
+
+    var getQueryString = function ( field, url ) {
+        var href = url ? url : window.location.search;
+        var reg = new RegExp( '[?&]' + field + '=([^&#]*)', 'i' );
+        var string = reg.exec(href);
+        return string ? decodeURIComponent(string[1]) : null;
+    };
+
+
+document.addEventListener('DOMContentLoaded', function() {
+
+    var message = getQueryString('message');
+    var code = getQueryString('code');
+    createCard(code, message);
+
+    function createCard(cardCode, message) {
+        var container = document.body;
+        var template = document.getElementById('template');
+        var card = template.cloneNode(true);
+        card.style.display = 'block';
+        card.removeAttribute('id');
+
+        card.querySelector(".QRCode").innerHTML = 'http://projectsmile.nl/' + cardCode + "?qr";
+        card.querySelector(".footer i").innerHTML = 'projectsmile.nl/' + cardCode;
+        card.querySelector(".message p").innerHTML = message;
+
+        container.appendChild(card);
+    }
+
+
+	var qrCodeElems = document.getElementsByClassName('QRCode');
+	for (var i = 0; i < qrCodeElems.length; i++) {
+		var qrCodeElem = qrCodeElems[i];
+		var text = qrCodeElem.innerHTML;
+		qrCodeElem.innerHTML = '';
+		new QRCode(qrCodeElem, { text: text, colorLight: 'transparent' });
+	}
+});
+
+</script>
+   <style>
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+@font-face {
+font-family: "Sofia";
+src: url("Sofia-Regular.otf") format("opentype");
+}
+
+      body, html { margin: 0px; padding: 0px; }
+      .card { background-color: white; width: 91mm; height: 61mm; float:left; margin: 0px; padding: 3mm;  }
+      .inner-card {
+	position: relative;
+	width: 85mm;
+	height: 55mm;
+     }
+     .inner-card img { max-height: 100%; max-width: 100%; }
+
+     .card { text-align: center; color: yellow; font-family: "Sofia", sans-serif; }
+
+
+     .card.front {
+        background-image: url(front-background.png);
+	background-repeat: no-repeat;
+	background-size: cover;
+     }
+
+	 .card {
+		 page-break-inside:avoid;
+	 }
+
+	 .card.back {
+		 background-color: #272522;
+	 }
+     .card.back .margin {
+	width: 100%;
+	height: 100%;
+	padding: 5mm;
+     }
+     .card.back .border {
+	border: 1mm solid #272522;
+width: 100%;
+height: 100%;
+background-image: url(goldstorm.png);
+background-position: -10;
+background-size: 110%;
+     }
+
+     .card.back .inner-card {
+	position: absolute;
+	left: 9.5mm;
+	top: 9.5mm;
+       width: 72mm; height: 42mm;
+	        background-color: #272522;
+
+
+     }
+     .card.back img.logo {
+        position: absolute;
+	top: 3mm;
+	left: 23mm;
+	height: 27mm;
+     }
+
+.card-container {
+float: left;
+position: relative;
+width: 91mm;
+height: 61mm;
+}
+.card-container .printbox {
+  position: absolute;
+  left: 0;
+  z-index: 1000;
+  top: 0px;
+  background-image: url('printbox.svg');
+  width: 91mm;
+  height: 61mm;
+}
+
+.card.front .inner-card .message {
+	position: absolute;
+	overflow: hidden;
+	width: 100%;
+	top: 19mm;
+	height: 16mm;
+	padding-right: 5mm;
+	padding-left: 5mm;
+	color: white;
+}
+
+.card.front .inner-card .message p {
+	display: table-cell;
+	width: 76mm;
+	height: 17mm;
+	vertical-align: middle;
+	text-align: center;
+	margin: 0;
+	padding: 0;
+}
+
+.card.front .inner-card .footer {
+	position: absolute;
+	bottom: 4mm;
+	text-align: right;
+	padding-left: 5mm;
+	width: 100%;
+	line-height: 130%;
+	padding-right: 18mm;
+	font-size: 0.6em;
+	color: white;
+	font-family: "Helvetica", sans-serif;
+}
+
+.inner-card .QRCode {
+	width: 12mm;
+	position: absolute;
+	right: 4mm;
+	bottom: 4mm;
+}
+
+.card.back .inner-card .passalong {
+	position: absolute;
+	left: 14mm;
+	top: 30mm;
+	width: 50mm;
+	height: 13mm;
+	font-size: 10pt;
+	text-align: left;
+	vertical-align: top;
+	background-image: url(goldstorm.png);
+        background-size: 100%;
+        background-position: -10;
+        background-repeat: no-repeat;
+	-webkit-background-clip: text;
+ 	-webkit-text-fill-color: transparent;
+	background-clip: text;
+	background-text-fill-color: transparent;
+}
+
+.card.front .inner-card div.recycle {
+	position: absolute;
+	left: 2mm;
+	bottom: 4mm;
+	width: 15mm;
+	font-size: 0.4em;
+	color: black;
+	font-family: "Helvetica", sans-serif;
+	font-weight: normal;
+	text-align: center;
+}
+
+.card.front .inner-card div.recycle img {
+	width: 8mm;
+}
+
+	   .card-container .blackline {
+		   height: 20mm;
+		   top: 20mm;
+		   width: 100%;
+		   position: absolute;
+		   background-color: #272522;
+	   }
+
+   </style>
+</head>
+<body>
+
+
+<div class="card-container" id="template" style="display: none;">
+<div class="printbox"></div>
+<div class="blackline"></div>
+<div class="card front">
+   <div class="margin">
+   <div class="inner-card">
+   <div class="recycle">
+	   <img src="recycle.png" /><br />
+	   <b>Geef door</b><br />of recycle
+   </div>
+	<div class="QRCode">http://projectsmile.nl/QOR</div>
+        <div class="message">
+			<p>Ik wil je even zeggen dat je er goed uit ziet vandaag! </p>
+		</div>
+	<div class="footer">Wil je weten waar dit kaartje is geweest?<br />Kijk op <i>projectsmile.nl/QOX</i></div>
+   </div>
+   </div>
+</div>
+</div>
+
+
+<!--<div class="card-container">-->
+<!--<div class="printbox"></div>-->
+<!--<div class="card back">-->
+   <!--<div class="margin">-->
+   <!--<div class="border">-->
+   <!--<div class="inner-card">-->
+        <!--<img src="logo.png" class="logo" />-->
+        <!--<div class="passalong">&nbsp;Geef mij door</div>-->
+   <!--</div>-->
+   <!--</div>-->
+   <!--</div>-->
+<!--</div>-->
+<!--</div>-->
+
+</body>
+</html>
