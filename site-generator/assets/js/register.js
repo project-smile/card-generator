@@ -76,10 +76,17 @@ function Registration() {
         oReq.onload = function () {
             if (oReq.status == 200) {
                 var contentType = oReq.getResponseHeader('Content-Type');
-                var image = oReq.responseText;
 
                 var imageElem = document.getElementById('selfiePicture');
-                imageElem.src = 'data:' + contentType + ';base64,' + image;
+
+                // if contentType = text/uri-list, then we expect a normal URL back
+                if (contentType === 'text/uri-list') {
+                    imageElem.src = oReq.responseText;
+                } else {
+                    // otherwise, we expect to get an image binary back
+                    var image = oReq.responseText;
+                    imageElem.src = 'data:' + contentType + ';base64,' + image;
+                }
                 imageElem.style.display = 'block';
 
                 // enable the next button
