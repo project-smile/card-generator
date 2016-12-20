@@ -65,7 +65,7 @@
     <form id="registrationForm" enctype="multipart/form-data">
 
         <header>
-            <img src="/assets/img/logo-without-border.png" class="logo without border"/>
+            <img track-event="register-logo" src="/assets/img/logo-without-border.png" class="logo without border"/>
         </header>
 
 
@@ -85,6 +85,7 @@
 
             <footer>
                 <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button-accent"
+                        track-event="register-firstpage-continue"
                         onclick="return registration.submit('first_page')">
                     Ga verder
                 </button>
@@ -95,7 +96,7 @@
             <p>Maak een selfie met jouw kaartje!</p>
 
             <div class="selfiewrapper">
-            <div class="selfie" onclick="return registration.makeSelfie()">
+            <div class="selfie" onclick="return registration.makeSelfie()" track-event="register-selfie-placeholder">
                 <i class="material-icons camera">camera_enhance</i>
                 <img style="display:none;" id="selfiePicture" />
                 <div class="mdl-spinner mdl-js-spinner is-active"></div>
@@ -104,11 +105,11 @@
 
             <input type="file" accept="image/*;capture=camera" style="display: none;" id="selfieInput" />
 
-            <a class="skip" onclick="return registration.submit('selfie');">Overslaan</a>
+            <a class="skip" onclick="return registration.submit('selfie');" track-event="register-selfie-skip">Overslaan</a>
 
             <footer>
                 <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button-accent"
-                        disabled
+                        disabled track-event="register-selfie-continue"
                         onclick="return registration.submit('selfie')">
                     Ga verder
                 </button>
@@ -125,6 +126,7 @@
 
             <footer>
                 <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button-accent"
+                        track-event="register-confirm-save"
                         onclick="return registration.submit()">
                     Opslaan!
                 </button>
@@ -158,6 +160,7 @@
 
             <footer>
                 <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button-accent"
+                        track-event="register-finished-allcards"
                         onclick="window.location.href='https://projectsmile.nl'; return false;">
                     Bekijk alle kaartjes
                 </button>
