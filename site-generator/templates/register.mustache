@@ -71,14 +71,14 @@
 
 <div class="register">
 
-    <form action="" enctype="multipart/form-data">
+    <form enctype="multipart/form-data">
 
         <header>
             <img src="/assets/img/logo-without-border.png" class="logo without border"/>
         </header>
 
 
-        <section class="page first_page active">
+        <section class="page first_page">
             <p>Leuk! Je hebt een kaartje van iemand gekregen.</p>
             <p>Laat ons weten even weten waar en wij zetten het op de kaart!</p>
 
@@ -99,8 +99,22 @@
             </footer>
         </section>
 
-        <section class="page page_two">
+        <section class="page selfie active">
             <p>Maak een selfie met jouw kaartje!</p>
+
+            <div class="selfie" onclick="document.getElementById('selfieInput').click()">
+                <i class="material-icons camera">camera_enhance</i>
+            </div>
+
+            <input type="file" accept="image/*;capture=camera" style="display: none;" name="selfie" id="selfieInput" />
+
+            <a class="skip">Skip</a>
+
+            <footer>
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button-accent">
+                    Zet op de kaart!
+                </button>
+            </footer>
 
         </section>
 

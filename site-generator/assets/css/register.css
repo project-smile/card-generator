@@ -70,12 +70,12 @@ body > div.register section.page.active {
     display: block;
 }
 
-body > div.register section.first_page p {
+body > div.register section.page p {
     font-size: 1.3em;
     text-align: center;
 }
 
-body > div.register section.first_page p:last-of-type {
+body > div.register section.page p:last-of-type {
     padding-bottom: 30px;
 }
 
@@ -89,6 +89,35 @@ body > div.register section.page footer {
     bottom: 2em;
     left: 0;
     right: 0;
+}
+
+body > div.register section.page.selfie div.selfie {
+    background-image: url('/assets/img/photo-placeholder.png');
+    background-size: contain;
+    background-color: white;
+    background-repeat: no-repeat;
+    border: 1px dashed grey;
+    background-position: center;
+    width: 100%;
+    position: relative;
+    min-height: 200px;
+    text-align: center;
+    cursor: pointer;
+}
+
+body > div.register section.page.selfie div.selfie i.camera {
+    font-size: 3em;
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+body > div.register section.page.selfie .skip {
+    position: absolute;
+    top: 1em;
+    right: 1em;
+    color: rgba(47,179,178, 1);
+    text-transform: uppercase;
 }
 
 button {
