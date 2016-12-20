@@ -29,6 +29,7 @@ function Registration() {
 
             case 'selfie':
             {
+                // immediately go to the next state if there was no image uploaded
                 gotoState('confirm');
             }
                 break;
