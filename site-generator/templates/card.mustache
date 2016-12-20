@@ -55,8 +55,10 @@
 
         function moreInfo() {
             document.body.classList.add('exiting');
-            window.location.href = 'moreinfo.html';
-            return false;
+            window.setTimeout(function () {
+                window.location.href = 'moreinfo.html';
+            }, 1500);
+            return false; // do not follow the link
         }
     </script>
 </head>
