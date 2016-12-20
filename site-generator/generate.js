@@ -7,9 +7,9 @@ var csvParse = require('csv-parse');
 const OUTPUT_DIR = process.env.OUTPUT_DIR || 'generated';
 
 var defaultTemplates = {
-    cardPage: '',
-    registerPage: null,
-    homepage: null
+    cardPage: fs.readFileSync('./templates/card.mustache', 'utf8'),
+    registerPage: fs.readFileSync('./templates/register.mustache', 'utf8'),
+    moreinfoPage: fs.readFileSync('./templates/moreinfo.mustache', 'utf8'),
 };
 
 function generateCardPages(card, outputDir) {
@@ -34,8 +34,14 @@ function generateCardPages(card, outputDir) {
     var viewDataJsonFile = cardFolder + '/card.json';
     fs.writeFileSync(viewDataJsonFile, JSON.stringify(viewData));
 
+    var indexFile = cardFolder + '/index.html';
+    fs.writeFileSync(indexFile, Mustache.render(defaultTemplates.cardPage, viewData));
 
-    // Mustache.render("{{title}} spends {{calc}}", viewData);
+    var moreinfoFile = cardFolder + '/moreinfo.html';
+    fs.writeFileSync(moreinfoFile, Mustache.render(defaultTemplates.moreinfoPage, viewData));
+
+    var registerPage = cardFolder + '/register.html';
+    fs.writeFileSync(registerPage, Mustache.render(defaultTemplates.registerPage, viewData));
 }
 
 
