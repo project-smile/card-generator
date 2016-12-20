@@ -3,6 +3,21 @@
 // It was written two days prior to issuing the actual cards.
 // It was also purposely written with as much vanilla javascript as possible (to practise this).
 
+
+var isProduction = function() { return window.location.hostname.lastIndexOf('projectsmile.nl') > -1 };
+// config per env
+if (isProduction()) {
+    window.config = {
+        env: 'prd',
+        uaCode: 'UA-85533742-1'
+    };
+} else {
+    window.config = {
+        env: 'dev',
+        uaCode: 'UA-85533742-2'
+    };
+}
+
 // google analytics code
 (function (i, s, o, g, r, a, m) {
     i['GoogleAnalyticsObject'] = r;
@@ -15,14 +30,7 @@
     a.src = g;
     m.parentNode.insertBefore(a, m)
 })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
-
-if (window.location.hostname.lastIndexOf('projectsmile.nl') > -1) {
-    // prd profile
-    ga('create', 'UA-85533742-1', 'auto');
-} else {
-    //dev profile
-    ga('create', 'UA-85533742-2', 'auto');
-}
+ga('create', window.config.uaCode, 'auto');
 ga('send', 'pageview');
 
 
