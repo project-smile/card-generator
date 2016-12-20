@@ -21,6 +21,14 @@ function Registration() {
     registration.form = document.getElementById('registrationForm');
     registration.formData = {};
 
+    var selfieInput = document.getElementById('selfieInput');
+    selfieInput.addEventListener('change', function() {
+        // when we get back here, the user has selected. So let's start uploading.
+        // This is async
+        uploadSelfie();
+    });
+
+
     this.submit = function (state) {
         console.log('Submitting state: ' + state);
 
@@ -37,6 +45,7 @@ function Registration() {
             case 'selfie':
             {
                 // immediately go to the next state if there was no image uploaded
+                initMap();
                 gotoState('confirm');
             }
                 break;
@@ -50,13 +59,8 @@ function Registration() {
     };
 
     this.makeSelfie = function () {
-        // simulate click on the file input (note that this is blocking)
-        document.getElementById('selfieInput').click();
-
-        // when we get back here, the user has selected. So let's start uploading.
-        // This is async
-        uploadSelfie();
-
+        // simulate click on the file input (note that this is non-blocking)
+        selfieInput.click();
         return false;
     };
 
@@ -120,12 +124,12 @@ function initGoogleMaps() {
         input.parentNode.querySelector('label').style.visibility = 'visible';
     }, 1000);
 
-
-    initMap();
-
 }
 
+var mapInitialized = false;
 function initMap() {
+    if (mapInitialized) return true;
+    mapInitialized = true;
     var mapOptions = {
         zoom: 10,
         center: new google.maps.LatLng(51.9814708, 5.1163364),
@@ -450,7 +454,6 @@ function initMap() {
     });
 
     infowindow.open(map, marker);
-
 
 }
 
