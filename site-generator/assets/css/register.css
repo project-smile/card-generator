@@ -210,6 +210,10 @@ button {
     font-weight: normal !important;
 }
 
+button[disabled] {
+    background-color: rgba(128,128,128, 0.8) !important;
+}
+
 div.register section input.pristine,
 div.register section div.mdl-textfield.is-focused.is-invalid input {
     border-color: rgba(0, 0, 0, 0.117647) !important;

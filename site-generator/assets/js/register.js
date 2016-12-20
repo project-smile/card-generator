@@ -81,6 +81,10 @@ function Registration() {
                 var imageElem = document.getElementById('selfiePicture');
                 imageElem.src = 'data:' + contentType + ';base64,' + image;
                 imageElem.style.display = 'block';
+
+                // enable the next button
+                registration.form.querySelector('section.selfie button').removeAttribute('disabled');
+
             } else {
                 // an error occurred
                 console.error('An error occurred while uploading the selfie');
