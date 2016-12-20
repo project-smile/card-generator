@@ -52,9 +52,12 @@
 //                        new google.maps.LatLng(-33.8902, 151.1759),
 //                        new google.maps.LatLng(-33.8474, 151.2631))
             });
+
+            // fix the placeholder from the location label as this messes with material design
             window.setTimeout(function() {
                 input.removeAttribute('placeholder');
                 input.parentNode.classList.remove('has-placeholder');
+                input.parentNode.querySelector('label').style.visibility = 'visible';
             }, 1000);
 
         }
@@ -80,13 +83,13 @@
             <p>Laat ons weten even weten waar en wij zetten het op de kaart!</p>
 
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text" id="name">
+                <input class="mdl-textfield__input" type="text" id="name" name="name">
                 <label class="mdl-textfield__label" for="name">Wat is je voornaam?</label>
             </div>
 
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text" id="location">
-                <label class="mdl-textfield__label" for="location">Waar kreeg je dit kaartje?</label>
+                <input class="mdl-textfield__input" type="text" id="location" name="location">
+                <label class="mdl-textfield__label" for="location" style="visibility: hidden;">Waar kreeg je dit kaartje?</label>
             </div>
         </section>
 
