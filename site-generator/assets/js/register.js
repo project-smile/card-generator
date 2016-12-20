@@ -16,6 +16,11 @@ switch (window.config.env) {
 
 function Registration() {
 
+    var registration = this;
+
+    registration.form = document.getElementById('registrationForm');
+    registration.formData = {};
+
     this.submit = function (state) {
         console.log('Submitting state: ' + state);
 
@@ -23,6 +28,8 @@ function Registration() {
 
             case 'first_page':
             {
+                registration.formData.firstname = 'Sample Name';
+                registration.formData.location = 'Sample Location';
                 gotoState('selfie');
             }
                 break;
@@ -42,6 +49,47 @@ function Registration() {
         return false;
     };
 
+    this.makeSelfie = function () {
+        // simulate click on the file input (note that this is blocking)
+        document.getElementById('selfieInput').click();
+
+        // when we get back here, the user has selected. So let's start uploading.
+        // This is async
+        uploadSelfie();
+
+        return false;
+    };
+
+
+    function uploadSelfie() {
+        registration.form.querySelector('div.selfie').classList.add('uploading');
+
+        var dataimg = new FormData();
+        dataimg.append('selfie', document.getElementById('selfieInput').files[0], 'selfie');
+
+        var oReq = new XMLHttpRequest();
+        oReq.open("POST", window.config.registration.imageUploadUrl, true);
+        oReq.onload = function () {
+            if (oReq.status == 200) {
+                var contentType = oReq.getResponseHeader('Content-Type');
+                var image = oReq.responseText;
+
+                var imageElem = document.getElementById('selfiePicture');
+                imageElem.src = 'data:' + contentType + ';base64,' + image;
+                imageElem.style.display = 'block';
+            } else {
+                // an error occurred
+                console.error('An error occurred while uploading the selfie');
+            }
+
+            registration.form.querySelector('div.selfie').classList.remove('uploading');
+        };
+
+        oReq.send(dataimg);
+        return false;
+
+    }
+
     function gotoState(state) {
         document.querySelectorAll('#registrationForm section').forEach(function (section) {
             if (section.classList.contains(state)) {
@@ -53,30 +101,9 @@ function Registration() {
     };
 }
 
-window.registration = new Registration();
-
-
-function uploadSelfie() {
-    var dataimg = new FormData();
-    dataimg.append('selfie', document.getElementById('selfieInput').files[0], 'selfie');
-
-    var oReq = new XMLHttpRequest();
-    oReq.open("POST", "/submit", true);
-    oReq.onload = function (oEvent) {
-        if (oReq.status == 200) {
-            var contentType = oReq.getResponseHeader('Content-Type');
-            var image = oReq.responseText;
-
-            var imageElem = document.getElementById('selfiePicture');
-            imageElem.src = 'data:' + contentType + ';base64,' + image;
-            imageElem.style.display = 'block';
-        } else {
-        }
-    };
-
-    oReq.send(dataimg);
-    return false;
-}
+document.addEventListener('DOMContentLoaded', function () {
+    window.registration = new Registration();
+});
 
 function initGoogleMaps() {
     var input = document.getElementById('location');

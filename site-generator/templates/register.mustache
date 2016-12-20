@@ -92,9 +92,10 @@
             <p>Maak een selfie met jouw kaartje!</p>
 
             <div class="selfiewrapper">
-            <div class="selfie" onclick="document.getElementById('selfieInput').click()">
+            <div class="selfie" onclick="return registration.makeSelfie()">
                 <i class="material-icons camera">camera_enhance</i>
                 <img style="display:none;" id="selfiePicture" />
+                <div class="mdl-spinner mdl-js-spinner is-active"></div>
             </div>
             </div>
 

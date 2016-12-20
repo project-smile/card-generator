@@ -136,9 +136,24 @@ body > div.register section.page.selfie .skip {
     text-transform: uppercase;
 }
 
-body > div.register section.page.confirm {
-
+body > div.register section.page.selfie div.selfie.uploading {
+    background-image: none;
 }
+
+body > div.register section.page.selfie div.selfie.uploading > * {
+    display: none;
+}
+
+body > div.register section.page.selfie div.selfie div.mdl-spinner {
+    display: none;
+}
+body > div.register section.page.selfie div.selfie.uploading div.mdl-spinner {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    display: inline-block;
+}
+
 
 body > div.register section.page.confirm #map {
     width: 100%;
