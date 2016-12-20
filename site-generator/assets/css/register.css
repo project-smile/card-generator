@@ -61,8 +61,13 @@ body > div.register header img.logo {
     display:none;
 }
 
-body > div.register section.first_page {
+body > div.register section.page {
     padding-top: 1em;
+    display: none;
+}
+
+body > div.register section.page.active {
+    display: block;
 }
 
 body > div.register section.first_page p {
@@ -78,21 +83,24 @@ div.register .mdl-textfield__label {
     color: rgba(0,0,0,.60)
 }
 
-body > div.register footer {
+body > div.register section.page footer {
     text-align: center;
     position: absolute;
-    bottom: 1em;
+    bottom: 2em;
     left: 0;
     right: 0;
 }
 
-.button {
-    border-radius: 25px;
-    color: white;
-    background-color: rgba(47,179,178, 1);
-    padding: 15px 30px 15px 30px;
-    cursor: pointer;
-    min-width: 10em;
-    text-decoration: none;
-    font-size: 0.8em;
+button {
+    border-radius: 30px !important;
+    color: white !important;
+    background-color: rgba(47,179,178, 1) !important;
+    padding: 15px 30px 15px 30px !important;
+    cursor: pointer  !important;
+    height: auto !important;
+    min-width: 15em  !important;
+    text-decoration: none  !important;
+    font-size: 0.8em  !important;
+    text-transform: none !important;
+    font-weight: normal !important;
 }
