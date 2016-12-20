@@ -26,7 +26,7 @@
     <title>Project Smile - Wat heeft jou vandaag doen glimlachen?</title>
 
     <!-- Custom CSS -->
-    <link href="../../../project-smile.github.io/assets/css/register.css" rel="stylesheet">
+    <link href="/assets/css/register.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -38,7 +38,8 @@
     <script type="text/javascript" src="/assets/js/general.js"></script>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.indigo-pink.min.css">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.teal-orange.min.css">
     <script defer src="https://code.getmdl.io/1.2.1/material.min.js"></script>
 
 
@@ -70,14 +71,18 @@
     <form action="" enctype="multipart/form-data">
 
         <header>
-            <img src="../../../project-smile.github.io/assets/img/logo-without-border.png" class="logo without border"/>
-
+            <img src="/assets/img/logo-without-border.png" class="logo without border"/>
         </header>
 
 
-        <section>
+        <section class="first_page">
             <p>Leuk! Je hebt een kaartje van iemand gekregen.</p>
-            <p>Laat zien dat jij hem hebt gehad, zet 'm op de kaart!</p>
+            <p>Laat ons weten even weten waar en wij zetten het op de kaart!</p>
+
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="text" id="name">
+                <label class="mdl-textfield__label" for="name">Wat is je voornaam?</label>
+            </div>
 
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                 <input class="mdl-textfield__input" type="text" id="location">
