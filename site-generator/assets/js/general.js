@@ -42,6 +42,17 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
 
+
+    (function() {
+        document.querySelectorAll('input').forEach(function (input) {
+            input.classList.add('pristine');
+            input.addEventListener('focus', function() {
+                input.classList.remove('pristine');
+            });
+        });
+    })();
+
+
     window.setTimeout(function () {
         document.body.classList.add('fade-in');
     });

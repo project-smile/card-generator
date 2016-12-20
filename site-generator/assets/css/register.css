@@ -156,3 +156,12 @@ button {
     text-transform: none !important;
     font-weight: normal !important;
 }
+
+div.register section input.pristine,
+div.register section div.mdl-textfield.is-focused.is-invalid input {
+    border-color: rgba(0, 0, 0, 0.117647) !important;
+}
+div.register section div.mdl-textfieldis-focused label,
+div.register section div.mdl-textfield input.pristine ~ label {
+    color: rgba(0,0,0,.60); !important;
+}
