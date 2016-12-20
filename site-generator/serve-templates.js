@@ -8,6 +8,7 @@ var app = express();
 app.engine('mustache', mustacheExpress());
 
 app.set('view engine', 'mustache');
+app.disable('view cache');
 app.set('views', __dirname + '/templates'); // you can change '/views' to '/public',
     // but I recommend moving your templates to a directory
     // with no outside access for security reasons
