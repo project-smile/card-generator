@@ -45,6 +45,30 @@
 
     <script>
 
+        function uploadSelfie()
+        {
+            var dataimg = new FormData();
+            dataimg.append('selfie', document.getElementById('selfieInput').files[0], 'selfie');
+
+            var oReq = new XMLHttpRequest();
+            oReq.open("POST", "/submit", true);
+            oReq.onload = function(oEvent) {
+                if (oReq.status == 200) {
+                    var contentType = oReq.getResponseHeader('Content-Type');
+                    var image = oReq.responseText;
+
+                    var imageElem = document.getElementById('selfiePicture');
+                    imageElem.src = 'data:'+contentType+';base64,'+image;
+                    imageElem.style.display = 'block';
+                } else {
+//                    oOutput.innerHTML = "Error " + oReq.status + " occurred when trying to upload your file.<br \/>";
+                }
+            };
+
+            oReq.send(dataimg);
+            return false;
+        }
+
         function initGoogleMaps() {
             var input = document.getElementById('location');
             var searchBox = new google.maps.places.SearchBox(input, {
@@ -71,7 +95,7 @@
 
 <div class="register">
 
-    <form enctype="multipart/form-data">
+    <form id="registrationForm" enctype="multipart/form-data">
 
         <header>
             <img src="/assets/img/logo-without-border.png" class="logo without border"/>
@@ -104,15 +128,16 @@
 
             <div class="selfie" onclick="document.getElementById('selfieInput').click()">
                 <i class="material-icons camera">camera_enhance</i>
+                <img style="display:none;" id="selfiePicture" />
             </div>
 
             <input type="file" accept="image/*;capture=camera" style="display: none;" name="selfie" id="selfieInput" />
 
-            <a class="skip">Skip</a>
+            <a class="skip">Overslaan</a>
 
             <footer>
-                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button-accent">
-                    Zet op de kaart!
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button-accent" onclick="return uploadSelfie()">
+                    Ga verder
                 </button>
             </footer>
 

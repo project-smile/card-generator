@@ -1,8 +1,14 @@
 #!/usr/bin/env node
 var mustacheExpress = require('mustache-express');
 var express = require('express');
+var multer = require('multer');
+var bodyParser = require('body-parser')
+var fs = require('fs');
 
 var app = express();
+
+app.use(bodyParser.json());
+
 
 // Register '.html' extension with The Mustache Express
 app.engine('mustache', mustacheExpress());
@@ -20,6 +26,12 @@ app.get('/:cardId/:page', function (req, res) {
         message: 'Welkom'
         };
 	res.render(req.params.page, card);
+});
+
+app.post('/submit', multer({dest:'./'}).single('selfie'), function(req, res) {
+    console.log(req.file);
+    res.contentType(req.file.mimetype);
+    fs.createReadStream(__dirname + "/" + req.file.filename, 'base64').pipe(res);
 });
 
 app.use('/assets', express.static('./assets'));
