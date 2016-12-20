@@ -129,6 +129,20 @@ body > div.register section.page.selfie .skip {
     text-transform: uppercase;
 }
 
+body > div.register section.page.confirm {
+
+}
+
+body > div.register section.page.confirm #map {
+    width: 100%;
+    height: 10em;
+}
+
+body > div.register section.page.confirm #map > div,
+body > div.register section.page.confirm #map .gm-style {
+    border-radius: 20px;
+}
+
 button {
     border-radius: 30px !important;
     color: white !important;

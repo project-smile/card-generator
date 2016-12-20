@@ -84,6 +84,9 @@
                 input.parentNode.querySelector('label').style.visibility = 'visible';
             }, 1000);
 
+
+            initMap();
+
         }
     </script>
     <script async defer
@@ -123,7 +126,7 @@
             </footer>
         </section>
 
-        <section class="page selfie active">
+        <section class="page selfie">
             <p>Maak een selfie met jouw kaartje!</p>
 
             <div class="selfie" onclick="document.getElementById('selfieInput').click()">
@@ -143,6 +146,20 @@
 
         </section>
 
+
+        <section class="page confirm active">
+            <p>Zet mij op de kaart!</p>
+
+            <div class="map" id="map">
+            </div>
+
+            <footer>
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button-accent" onclick="return uploadSelfie()">
+                    Opslaan!
+                </button>
+            </footer>
+
+        </section>
 
 
     </form>
