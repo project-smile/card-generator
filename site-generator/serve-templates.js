@@ -22,7 +22,7 @@ app.get('/:cardId/:page', function (req, res) {
 	res.render(req.params.page, card);
 });
 
-app.use('/assets', express.static('../../project-smile.github.io/assets'));
+app.use('/assets', express.static('./assets'));
 
 console.log('listening on 8080');
 app.listen(8080);

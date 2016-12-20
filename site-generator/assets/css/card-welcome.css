@@ -1,0 +1,106 @@
+body,
+html {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+body {
+    width: 100%;
+    min-height: 100%;
+    max-height: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background-color: black; /* note this needs to change if the view changes */
+    opacity: 0;
+    margin: 0;
+}
+
+body.fade-in {
+    opacity: 1;
+    transition: 1.5s opacity ease-in-out;
+}
+
+body.exiting {
+    opacity: 0;
+    transition: 1.5s opacity ease-in-out;
+}
+
+body > div.card-welcome {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 500px;
+    background-color: black;
+    background-image: url('/assets/img/hands-waves-black.png');
+    background-position-x: center;
+    background-repeat: no-repeat;
+    color: white;
+    font-family: "Georgia", sans-serif;
+    font-size: 1.3em;
+}
+
+body > div.card-welcome p {
+    max-width: 90%;
+    height: 80vh;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 0;
+    margin-top: 0;
+    position: absolute;
+    left: 0;
+    right: 0;
+    background-image: url('/assets/img/logo-without-text.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    /*min-height: 350px;*/
+    width: 13em;
+    text-justify: distribute;
+    padding: 4em 2em 4em 2em;
+    text-align: center;
+    top: 2em;
+}
+
+body > div.card-welcome .button.continue {
+    display: inline-block;
+}
+
+body > div.card-welcome .button.continue:first-child {
+    margin-bottom: 0.5em;
+}
+
+body > div.card-welcome .container {
+    text-align: center;
+    position: absolute;
+    bottom: 1em;
+    left: 0;
+    right: 0;
+}
+
+body > div.card-welcome .share-card {
+    position: absolute;
+    top: 0.6em;
+    right: 0.6em;
+    width: 1em;
+    height: 1em;
+    background-image: url(/assets/img/share-icon.png);
+    background-size: cover;
+
+}
+
+.button {
+    border-radius: 25px;
+    color: black;
+    background-color: rgba(255, 255, 255, 1);
+    padding: 15px 30px 15px 30px;
+    cursor: pointer;
+    min-width: 10em;
+    text-decoration: none;
+    font-size: 0.8em;
+}

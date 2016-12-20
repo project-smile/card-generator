@@ -1,0 +1,241 @@
+body,
+html {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+body {
+    background-color: #272522;
+    color: #0e1626;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 700;
+}
+
+h1 {
+    font-size: 2em;
+}
+
+p.copyright {
+    margin: 15px 0 0;
+}
+
+body.full {
+    width: 100%;
+    min-height: 100%;
+    max-height: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background-image: url(https://maps.googleapis.com/maps/api/staticmap?center=Nederland&zoom=7&scale=2&size=600x300&maptype=roadmap&key=AIzaSyAYRARsCScDvrIyzZuKunjCT-wHV2l_p2M&format=png&maptype=roadmap&style=element:geometry%7Ccolor:0x242f3e&style=element:labels.text.fill%7Ccolor:0x746855&style=element:labels.text.stroke%7Ccolor:0x242f3e&style=feature:administrative.land_parcel%7Cvisibility:off&style=feature:administrative.locality%7Celement:labels.text.fill%7Ccolor:0xd59563&style=feature:administrative.neighborhood%7Cvisibility:off&style=feature:poi%7Celement:labels.text%7Cvisibility:off&style=feature:poi%7Celement:labels.text.fill%7Ccolor:0xd59563&style=feature:poi.business%7Cvisibility:off&style=feature:poi.park%7Celement:geometry%7Ccolor:0x263c3f&style=feature:poi.park%7Celement:labels.text%7Cvisibility:off&style=feature:poi.park%7Celement:labels.text.fill%7Ccolor:0x6b9a76&style=feature:road%7Celement:geometry%7Ccolor:0x38414e&style=feature:road%7Celement:geometry.stroke%7Ccolor:0x212a37&style=feature:road%7Celement:labels%7Cvisibility:off&style=feature:road%7Celement:labels.text.fill%7Ccolor:0x9ca5b3&style=feature:road.arterial%7Cvisibility:off&style=feature:road.highway%7Celement:geometry%7Ccolor:0x746855&style=feature:road.highway%7Celement:geometry.stroke%7Ccolor:0x1f2835&style=feature:road.highway%7Celement:labels%7Cvisibility:off&style=feature:road.highway%7Celement:labels.text.fill%7Ccolor:0xf3d19c&style=feature:road.local%7Cvisibility:off&style=feature:transit%7Celement:geometry%7Ccolor:0x2f3948&style=feature:transit.station%7Celement:labels.text.fill%7Ccolor:0xd59563&style=feature:water%7Celement:geometry%7Ccolor:0x17263c&style=feature:water%7Celement:labels.text%7Cvisibility:off&style=feature:water%7Celement:labels.text.fill%7Ccolor:0x515c6d&style=feature:water%7Celement:labels.text.stroke%7Ccolor:0x17263c&size=480x360);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+body.full #map {
+    width: 100%;
+    height: 100%;
+
+}
+
+body.full > img.logo {
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    width: 60px;
+}
+
+body.full footer {
+    position: absolute;
+    bottom: 0px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border: 2px solid white;
+    border-top-right-radius: 2em;
+    border-top-left-radius: 2em;
+    height: 40px;
+    width: 100%;
+    padding: 5px;
+    text-align: center;
+}
+
+body.full footer > {
+    display: inline-block;
+}
+
+.card-link {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
+
+.card-link img.card-example {
+    width: 50px;
+    border: 1px solid #0e1626;
+    border-radius: 1px;
+}
+
+.elementToFadeInAndOut {
+    opacity: 1;
+    animation: fade 3s infinite;
+}
+
+@keyframes slideIn {
+    from {
+        top: 100%;
+    }
+    to {
+        top: 0;
+    }
+}
+
+@keyframes fade {
+    0%, 100% {
+        opacity: 0.6
+    }
+    50% {
+        opacity: 1
+    }
+}
+
+body.full div.overlay {
+    position: fixed;
+    left: 0;
+    top: 100%;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    right: 0;
+    height: 100%;
+    max-width: 500px;
+    padding-top: 10px;
+    padding-bottom: 50px;
+    padding-right: 5px;
+    padding-left: 5px;
+    z-index: 100;
+}
+
+body.full div.overlay > div.content {
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 10px;
+    border-radius: 10px;
+    height: 100%;
+    width: 100%;
+    padding: 10px;
+}
+
+body.full div.overlay > div.content .closeMe {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+}
+
+body.full div.overlay.visible {
+    -webkit-animation-name: slideIn;
+    -webkit-animation-duration: 1.5s;
+    top: 0;
+}
+
+body.full #cardOverlay {
+    top: -100%;
+    left: 100%;
+}
+
+body.full #cardOverlay.visible {
+    -webkit-animation-name: slideInTopRight;
+    top: 0;
+    left: 0;
+}
+
+body.full #cardOverlay div.card {
+    max-width: 100%;
+    position: relative;
+    display: inline-block;
+}
+
+body.full #cardOverlay div.card img.background {
+    width: inherit;
+}
+
+body.full #cardOverlay div.card p.message {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    text-align: center;
+    top: 0;
+    left: 0;
+}
+
+@keyframes slideInTopRight {
+    from {
+        top: -100%;
+        left: 100%;
+    }
+    to {
+        top: 0;
+        left: 0;
+    }
+}
+
+div.overlay.fade.out {
+    -webkit-animation-name: fadeOut;
+}
+
+#ikhebereenOverlay ul.sentiment {
+    margin: 0;
+    padding: 0;
+}
+
+#ikhebereenOverlay ul.sentiment li {
+    display: inline-block;
+    list-style-type: none;
+    cursor: pointer;
+    font-size: 2em;
+    padding: 3px;
+    opacity: 0.5;
+}
+
+#ikhebereenOverlay ul.sentiment li.selected {
+    opacity: 1;
+}
+
+#ikhebereenOverlay ul.sentiment li input {
+    display: none;
+}
+
+@-webkit-keyframes fadeIn {
+    0% {
+        opacity: 0;
+        -webkit-transform: translateY(startYposition);
+    }
+    100% {
+        opacity: 1;
+        -webkit-transform: translateY(endYposition);
+    }
+}
+
+@-webkit-keyframes fadeOut {
+    0% {
+        opacity: 1;
+        -webkit-transform: translateY(startYposition);
+    }
+    100% {
+        opacity: 0;
+        -webkit-transform: translateY(endYposition);
+    }
+}
