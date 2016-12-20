@@ -1,3 +1,8 @@
+// Disclaimer
+// Please note that all the code in this project is not written with a lot of love
+// It was written two days prior to issuing the actual cards.
+// It was also purposely written with as much vanilla javascript as possible (to practise this).
+
 // google analytics code
 (function (i, s, o, g, r, a, m) {
     i['GoogleAnalyticsObject'] = r;
