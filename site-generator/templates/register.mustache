@@ -36,58 +36,19 @@
     <![endif]-->
 
     <script type="text/javascript" src="/assets/js/general.js"></script>
+    <script type="text/javascript" src="/assets/js/register.js"></script>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
     <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.teal-orange.min.css">
     <script defer src="https://code.getmdl.io/1.2.1/material.min.js"></script>
 
-
-    <script>
-
-        function uploadSelfie()
-        {
-            var dataimg = new FormData();
-            dataimg.append('selfie', document.getElementById('selfieInput').files[0], 'selfie');
-
-            var oReq = new XMLHttpRequest();
-            oReq.open("POST", "/submit", true);
-            oReq.onload = function(oEvent) {
-                if (oReq.status == 200) {
-                    var contentType = oReq.getResponseHeader('Content-Type');
-                    var image = oReq.responseText;
-
-                    var imageElem = document.getElementById('selfiePicture');
-                    imageElem.src = 'data:'+contentType+';base64,'+image;
-                    imageElem.style.display = 'block';
-                } else {
-//                    oOutput.innerHTML = "Error " + oReq.status + " occurred when trying to upload your file.<br \/>";
-                }
-            };
-
-            oReq.send(dataimg);
-            return false;
-        }
-
-        function initGoogleMaps() {
-            var input = document.getElementById('location');
-            var searchBox = new google.maps.places.SearchBox(input, {
-//                bounds: new google.maps.LatLngBounds(
-//                        new google.maps.LatLng(-33.8902, 151.1759),
-//                        new google.maps.LatLng(-33.8474, 151.2631))
-            });
-
-            // fix the placeholder from the location label as this messes with material design
-            window.setTimeout(function() {
-                input.removeAttribute('placeholder');
-                input.parentNode.classList.remove('has-placeholder');
-                input.parentNode.querySelector('label').style.visibility = 'visible';
-            }, 1000);
-
-
-            initMap();
-
-        }
+    <script type="text/javascript">
+        window.card = {
+            cardId: '{{ cardId }}',
+            templateId: '{{ templateId }}',
+            message: '{{ message }}'
+        };
     </script>
     <script async defer
             src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDjL6cvWIfMIFOkvpJtEKjsZFRe6oCXwN4&callback=initGoogleMaps"></script>
@@ -105,7 +66,7 @@
         </header>
 
 
-        <section class="page first_page">
+        <section class="page first_page active">
             <p>Leuk! Je hebt een kaartje van iemand gekregen.</p>
             <p>Laat ons weten even weten waar en wij zetten het op de kaart!</p>
 
@@ -161,7 +122,7 @@
 
         </section>
 
-        <section class="page finished active">
+        <section class="page finished">
             <p>Bedankt!</p>
             <p>Nu kunnen anderen zien waar jij het kaartje hebt gehad! Tof</p>
             <p>Wil je zien hoe de andere kaartjes werken? Klik dan op de knop hieronder.</p>
