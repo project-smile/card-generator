@@ -11,5 +11,9 @@
   "dependencies": {
     "csv-parse": "^1.1.7",
     "mustache": "^2.3.0"
+  },
+  "devDependencies": {
+    "express": "^4.14.0",
+    "mustache-express": "^1.2.4"
   }
 }
