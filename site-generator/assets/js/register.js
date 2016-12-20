@@ -1,18 +1,56 @@
+function Registration() {
 
-function uploadSelfie()
-{
+    this.submit = function (state) {
+        console.log('Submitting state: ' + state);
+
+        switch (state) {
+
+            case 'first_page':
+            {
+                gotoState('selfie');
+            }
+                break;
+
+            case 'selfie':
+            {
+                gotoState('confirm');
+            }
+                break;
+
+            default:
+                // try to submit everything...
+                gotoState('finished');
+        }
+
+    };
+
+    function gotoState(state) {
+        document.querySelectorAll('#registrationForm section').forEach(function (section) {
+            if (section.classList.contains(state)) {
+                section.classList.add('active');
+            } else {
+                section.classList.remove('active');
+            }
+        });
+    };
+}
+
+window.registration = new Registration();
+
+
+function uploadSelfie() {
     var dataimg = new FormData();
     dataimg.append('selfie', document.getElementById('selfieInput').files[0], 'selfie');
 
     var oReq = new XMLHttpRequest();
     oReq.open("POST", "/submit", true);
-    oReq.onload = function(oEvent) {
+    oReq.onload = function (oEvent) {
         if (oReq.status == 200) {
             var contentType = oReq.getResponseHeader('Content-Type');
             var image = oReq.responseText;
 
             var imageElem = document.getElementById('selfiePicture');
-            imageElem.src = 'data:'+contentType+';base64,'+image;
+            imageElem.src = 'data:' + contentType + ';base64,' + image;
             imageElem.style.display = 'block';
         } else {
         }
@@ -31,7 +69,7 @@ function initGoogleMaps() {
     });
 
     // fix the placeholder from the location label as this messes with material design
-    window.setTimeout(function() {
+    window.setTimeout(function () {
         input.removeAttribute('placeholder');
         input.parentNode.classList.remove('has-placeholder');
         input.parentNode.querySelector('label').style.visibility = 'visible';
