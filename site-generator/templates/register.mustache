@@ -91,9 +91,11 @@
         <section class="page selfie">
             <p>Maak een selfie met jouw kaartje!</p>
 
+            <div class="selfiewrapper">
             <div class="selfie" onclick="document.getElementById('selfieInput').click()">
                 <i class="material-icons camera">camera_enhance</i>
                 <img style="display:none;" id="selfiePicture" />
+            </div>
             </div>
 
             <input type="file" accept="image/*;capture=camera" style="display: none;" id="selfieInput" />
