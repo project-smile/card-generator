@@ -23,7 +23,8 @@ app.get('/:cardId/:page', function (req, res) {
   var card = {
         cardId: req.params.cardId,
         templateId: 'MSG1',
-        message: 'Welkom'
+        message: 'Welkom',
+        permalink: 'https://projectsmile.nl/'+req.params.cardId
         };
 	res.render(req.params.page, card);
 });

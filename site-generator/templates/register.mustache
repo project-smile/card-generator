@@ -147,15 +147,47 @@
         </section>
 
 
-        <section class="page confirm active">
+        <section class="page confirm">
             <p>Zet mij op de kaart!</p>
 
             <div class="map" id="map">
             </div>
 
             <footer>
-                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button-accent" onclick="return uploadSelfie()">
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button-accent" onclick="return next()">
                     Opslaan!
+                </button>
+            </footer>
+
+        </section>
+
+        <section class="page finished active">
+            <p>Bedankt!</p>
+            <p>Nu kunnen anderen zien waar jij het kaartje hebt gehad! Tof</p>
+            <p>Wil je zien hoe de andere kaartjes werken? Klik dan op de knop hieronder.</p>
+
+            <div class="social">
+                <!-- Load Facebook SDK for JavaScript -->
+                <div id="fb-root"></div>
+                <script>(function(d, s, id) {
+                    var js, fjs = d.getElementsByTagName(s)[0];
+                    if (d.getElementById(id)) return;
+                    js = d.createElement(s); js.id = id;
+                    js.src = "//connect.facebook.net/nl_NL/sdk.js#xfbml=1&version=v2.8&appId=145696559204696";
+                    fjs.parentNode.insertBefore(js, fjs);
+                }(document, 'script', 'facebook-jssdk'));</script>
+
+                <div class="fb-like" data-href="{{ permalink }}" data-layout="button" data-action="like" data-size="small"
+                     data-show-faces="true" data-share="true"></div>
+
+                <a href="https://twitter.com/share" class="twitter-share-button" data-text="message " data-url="{{ permalink }}"
+                   data-hashtags="projectsmile" data-lang="nl" data-show-count="false">Tweet</a>
+                <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </div>
+
+            <footer>
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button-accent" onclick="return homepage()">
+                    Bekijk alle kaartjes
                 </button>
             </footer>
 

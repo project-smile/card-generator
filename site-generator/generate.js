@@ -28,7 +28,8 @@ function generateCardPages(card, outputDir) {
     var viewData = {
         cardId: card.cardId,
         message: card.message,
-        templateId: card.templateId
+        templateId: card.templateId,
+        permalink: 'https://projectsmile.nl/' + card.cardId
     };
 
     var viewDataJsonFile = cardFolder + '/card.json';
