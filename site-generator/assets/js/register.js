@@ -128,6 +128,13 @@ function initGoogleMaps() {
 //                        new google.maps.LatLng(-33.8474, 151.2631))
     });
 
+    searchBox.setBounds({
+        east: 3.357962,
+        north: 53.556021,
+        south: 50.750384,
+        west: 7.227510
+    });
+
     // fix the placeholder from the location label as this messes with material design
     window.setTimeout(function () {
         input.removeAttribute('placeholder');
