@@ -65,6 +65,7 @@ body > div.card-welcome p {
     padding: 4em 2em 4em 2em;
     text-align: center;
     top: 2em;
+    font-size: 1.3em;
 }
 
 body > div.card-welcome .button.continue {

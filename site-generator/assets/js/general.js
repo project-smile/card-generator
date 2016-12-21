@@ -68,6 +68,29 @@ document.addEventListener('DOMContentLoaded', function () {
 
 });
 
+// generic error handling, and informing the user about this error.
+window.addEventListener('error', function (ev) {
+    // log this error to GA
+    ga('send', {
+        hitType: 'event',
+        eventCategory: 'error',
+        eventAction: ev.message,
+        eventLabel: JSON.stringify(ev)
+    });
+
+    var snackbarContainer = document.getElementById('snackbar');
+    if (snackbarContainer) {
+        var data = {
+            message: 'Er is een fout opgetreden. Mogelijk dat je hier last van ondervindt.',
+            timeout: 2000,
+            actionHandler: function(ev) {},
+            actionText: 'OK'
+        };
+        snackbarContainer.MaterialSnackbar.showSnackbar(data);
+    }
+
+});
+
 
 /**
  * Polyfills
