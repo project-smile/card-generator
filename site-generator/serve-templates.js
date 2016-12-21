@@ -37,5 +37,7 @@ app.post('/submit', multer({dest:'./'}).single('selfie'), function(req, res) {
 
 app.use('/assets', express.static('./assets'));
 
+app.use('/', express.static('./root-assets'));
+
 console.log('listening on 8080');
 app.listen(8080);

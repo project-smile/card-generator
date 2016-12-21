@@ -8,3 +8,4 @@ node generate.js
 
 # and copy assets
 cp -r assets generated
+cp -r root-assets/* generated
