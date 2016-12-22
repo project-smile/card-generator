@@ -4,9 +4,13 @@ import io.dropwizard.Application;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.flyway.FlywayBundle;
 import io.dropwizard.flyway.FlywayFactory;
+import io.dropwizard.hibernate.HibernateBundle;
 import io.dropwizard.jdbi.DBIFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import nl.projectsmile.api.v1.db.CardRegistration;
+import nl.projectsmile.api.v1.db.UploadedSelfie;
+import nl.projectsmile.api.v1.db.UploadedSelfieDAO;
 import nl.projectsmile.api.v1.resources.CardRegistrationResource;
 import nl.projectsmile.api.v1.resources.ImageResource;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
@@ -18,6 +22,14 @@ public class ApiApplication extends Application<ServerConfiguration> {
 		new ApiApplication().run(args);
 	}
 
+	private final HibernateBundle<ServerConfiguration> hibernate = new HibernateBundle<ServerConfiguration>(
+			CardRegistration.class, UploadedSelfie.class) {
+		@Override
+		public DataSourceFactory getDataSourceFactory(ServerConfiguration configuration) {
+			return configuration.getDataSourceFactory();
+		}
+	};
+
 	@Override
 	public String getName() {
 		return "projectsmile";
@@ -25,6 +37,7 @@ public class ApiApplication extends Application<ServerConfiguration> {
 
 	@Override
 	public void initialize(final Bootstrap<ServerConfiguration> bootstrap) {
+		bootstrap.addBundle(hibernate);
 		bootstrap.addBundle(new FlywayBundle<ServerConfiguration>() {
 			@Override
 			public DataSourceFactory getDataSourceFactory(ServerConfiguration configuration) {
@@ -54,7 +67,8 @@ public class ApiApplication extends Application<ServerConfiguration> {
 //		final UserDAO dao = jdbi.onDemand(UserDAO.class);
 //		environment.jersey().register(new UserResource(dao));
 
-		environment.jersey().register(new CardRegistrationResource(config.getSelfieUploadConfig()));
+		final UploadedSelfieDAO uploadedSelfieDAO = new UploadedSelfieDAO(hibernate.getSessionFactory());
+		environment.jersey().register(new CardRegistrationResource(config.getSelfieUploadConfig(), uploadedSelfieDAO));
 		environment.jersey().register(new ImageResource(config.getSelfieUploadConfig().getFileDirectory()));
 	}
 

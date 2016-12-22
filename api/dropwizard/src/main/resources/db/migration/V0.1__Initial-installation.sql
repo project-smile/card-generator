@@ -15,24 +15,24 @@ CREATE TABLE card (
 
 CREATE TABLE card_registration (
   id            UUID          NOT NULL PRIMARY KEY,
-  cardId        CHAR(3)       NOT NULL,
+  card_id        CHAR(3)       NOT NULL,
   first_name    VARCHAR(50)   NULL,
   location      VARCHAR(100)  NULL,
   longitude     DECIMAL(9, 6) NULL,
   latitude      DECIMAL(9, 6) NULL,
   selfie_uri    VARCHAR       NULL, -- URI. Could be local but could also be S3
   registered_on DATETIME DEFAULT CURRENT_TIMESTAMP(),
-  CONSTRAINT fk_card_registration_card_id FOREIGN KEY (cardId) REFERENCES card (id) ON DELETE CASCADE
+  CONSTRAINT fk_card_registration_card_id FOREIGN KEY (card_id) REFERENCES card (id) ON DELETE CASCADE
 );
 
 
 CREATE TABLE selfie_upload (-- records in this table are deleted on timeout and when the registration was completed
   id              UUID    NOT NULL PRIMARY KEY, -- UUID
-  cardId          CHAR(3) NOT NULL, -- uploaded related to this card
+  card_id          CHAR(3) NOT NULL, -- uploaded related to this card
   image_uri       VARCHAR NOT NULL, -- URI. Could be local but could also be S3
   image_mime_type VARCHAR NOT NULL,
   uploaded_on     DATETIME DEFAULT CURRENT_TIMESTAMP(), -- if image is not within X minutes, it is automatically deleted
-  CONSTRAINT fk_selfie_upload_card_id FOREIGN KEY (cardId) REFERENCES card (id) ON DELETE RESTRICT -- can't autodelete as we need to do cleanup
+  CONSTRAINT fk_selfie_upload_card_id FOREIGN KEY (card_id) REFERENCES card (id) ON DELETE RESTRICT -- can't autodelete as we need to do cleanup
 );
 
 -- insert initial card_messages
@@ -147,5 +147,3 @@ INSERT INTO card (id, message_id) VALUES ('67D', 1);
 INSERT INTO card (id, message_id) VALUES ('B9C', 1);
 INSERT INTO card (id, message_id) VALUES ('NVJ', 1);
 INSERT INTO card (id, message_id) VALUES ('1V8', 1);
-
-INSERT INTO card_registration (id, cardId) VALUES ('9b24493e-6e04-4f54-9957-f9004324bb32', 'BGD');

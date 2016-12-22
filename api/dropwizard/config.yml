@@ -13,7 +13,7 @@ database:
   password: 51mp50n
 
   # the JDBC URL
-  url: jdbc:h2:/tmp/projectsmile-db.h2
+  url: jdbc:h2:/tmp/projectsmile-db.h2;DATABASE_TO_UPPER=false
 
   # any properties specific to your JDBC driver:
   properties:

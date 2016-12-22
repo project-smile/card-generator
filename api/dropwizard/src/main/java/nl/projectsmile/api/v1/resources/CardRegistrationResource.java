@@ -1,11 +1,13 @@
 package nl.projectsmile.api.v1.resources;
 
 import com.codahale.metrics.annotation.Timed;
+import io.dropwizard.hibernate.UnitOfWork;
 import lombok.extern.slf4j.Slf4j;
 import nl.projectsmile.api.v1.SelfieUploadConfiguration;
-import nl.projectsmile.api.v1.api.CardRegistration;
 import nl.projectsmile.api.v1.api.NewRegistration;
-import nl.projectsmile.api.v1.api.UploadedSelfie;
+import nl.projectsmile.api.v1.db.CardRegistration;
+import nl.projectsmile.api.v1.db.UploadedSelfie;
+import nl.projectsmile.api.v1.db.UploadedSelfieDAO;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
@@ -32,9 +34,11 @@ import java.util.UUID;
 public class CardRegistrationResource {
 
 	private final SelfieUploadConfiguration config;
+	private final UploadedSelfieDAO uploadedSelfieDAO;
 
-	public CardRegistrationResource(SelfieUploadConfiguration config) {
+	public CardRegistrationResource(SelfieUploadConfiguration config, UploadedSelfieDAO uploadedSelfieDAO) {
 		this.config = config;
+		this.uploadedSelfieDAO = uploadedSelfieDAO;
 	}
 
 	@POST
@@ -55,6 +59,7 @@ public class CardRegistrationResource {
 	@Path("/selfie")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Timed
+	@UnitOfWork
 	public UploadedSelfie uploadSelfie(@FormDataParam("selfie") InputStream uploadedInputStream,
 									   @FormDataParam("selfie") final FormDataBodyPart body,
 									   @FormDataParam("selfie") FormDataContentDisposition fileDetail,
@@ -68,28 +73,35 @@ public class CardRegistrationResource {
 
 		final String imageId = UUID.randomUUID().toString();
 
+		// first save the uploadedSelfie as this will help with transactionality
+		final UploadedSelfie uploadedSelfie = UploadedSelfie.builder()
+				.id(imageId)
+				.cardId(cardId)
+				.mimeType("image/jpeg")
+				.url(config.getBaseUrl() + "/" + imageId)
+				.build();
+		// TODO: handle referential contraint error
+		uploadedSelfieDAO.create(uploadedSelfie);
+
+
+		// then actually resize and save the image
 		final BufferedImage originalImage = ImageIO.read(uploadedInputStream);
 		int type = originalImage.getType() == 0 ? BufferedImage.TYPE_INT_ARGB : originalImage.getType();
 
 		BufferedImage bufferedImage = resizeImage(originalImage, type);
-		ImageIO.write(bufferedImage, "png", new File(config.getFileDirectory() + "/" + imageId));
+		ImageIO.write(bufferedImage, "jpeg", new File(config.getFileDirectory() + "/" + imageId));
 
-
-		return UploadedSelfie.builder()
-				.id(imageId)
-				.url(config.getBaseUrl() + "/" + imageId)
-				.build();
+		return uploadedSelfie;
 	}
 
 	private static final int IMG_WIDTH = 100;
 	private static final int IMG_HEIGHT = 100;
 
 	private static BufferedImage resizeImage(BufferedImage originalImage, int type) {
-		BufferedImage resizedImage = new BufferedImage(IMG_WIDTH, IMG_HEIGHT, type);
-		Graphics2D g = resizedImage.createGraphics();
+		final BufferedImage resizedImage = new BufferedImage(IMG_WIDTH, IMG_HEIGHT, type);
+		final Graphics2D g = resizedImage.createGraphics();
 		g.drawImage(originalImage, 0, 0, IMG_WIDTH, IMG_HEIGHT, null);
 		g.dispose();
-
 		return resizedImage;
 	}
 }
