@@ -6,7 +6,7 @@ function Registration() {
     registration.formData = {};
 
     var selfieInput = document.getElementById('selfieInput');
-    selfieInput.addEventListener('change', function() {
+    selfieInput.addEventListener('change', function () {
         // when we get back here, the user has selected. So let's start uploading.
         // This is async
         uploadSelfie();
@@ -56,29 +56,19 @@ function Registration() {
         dataimg.append('selfie', document.getElementById('selfieInput').files[0], 'selfie');
 
         var oReq = new XMLHttpRequest();
-        oReq.open("POST", window.config.registration.imageUploadUrl, true);
+        oReq.open("POST", window.config.apiBaseUrl + "/card/" + window.card.cardId + "/registration/selfie", true);
         oReq.onload = function () {
             if (oReq.status == 200) {
-                var contentType = oReq.getResponseHeader('Content-Type');
-
+                var selfieData = JSON.parse(oReq.responseText);
                 var imageElem = document.getElementById('selfiePicture');
-
-                // if contentType = text/uri-list, then we expect a normal URL back
-                if (contentType === 'text/uri-list') {
-                    imageElem.src = oReq.responseText;
-                } else {
-                    // otherwise, we expect to get an image binary back
-                    var image = oReq.responseText;
-                    imageElem.src = 'data:' + contentType + ';base64,' + image;
-                }
+                imageElem.src = selfieData.uri;
                 imageElem.style.display = 'block';
-
                 // enable the next button
                 registration.form.querySelector('section.selfie button').removeAttribute('disabled');
 
             } else {
                 // an error occurred
-                console.error('An error occurred while uploading the selfie');
+                snackbar('Je selfie kon niet geupload worden. Sorry');
             }
 
             registration.form.querySelector('div.selfie').classList.remove('uploading');

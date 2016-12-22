@@ -4,7 +4,9 @@
 // It was also purposely written with as much vanilla javascript as possible (to practise this).
 
 
-var isProduction = function() { return window.location.hostname.lastIndexOf('projectsmile.nl') > -1 };
+var isProduction = function () {
+    return window.location.hostname.lastIndexOf('projectsmile.nl') > -1
+};
 // config per env
 if (isProduction()) {
     window.config = {
@@ -52,11 +54,10 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
 
-
-    (function() {
+    (function () {
         document.querySelectorAll('input').forEach(function (input) {
             input.classList.add('pristine');
-            input.addEventListener('focus', function() {
+            input.addEventListener('focus', function () {
                 input.classList.remove('pristine');
             });
         });
@@ -70,6 +71,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
 });
 
+window.snackbar = function (message, timeout) {
+    var snackbarContainer = document.getElementById('snackbar');
+    if (snackbarContainer) {
+        var data = {
+            message: message,
+            timeout: timeout || 2000,
+            actionHandler: function (ev) {
+            },
+            actionText: 'OK'
+        };
+        snackbarContainer.MaterialSnackbar.showSnackbar(data);
+    }
+};
+
 // generic error handling, and informing the user about this error.
 window.addEventListener('error', function (ev) {
     // log this error to GA
@@ -80,17 +95,7 @@ window.addEventListener('error', function (ev) {
         eventLabel: JSON.stringify(ev)
     });
 
-    var snackbarContainer = document.getElementById('snackbar');
-    if (snackbarContainer) {
-        var data = {
-            message: 'Er is een fout opgetreden. Mogelijk dat je hier last van ondervindt.',
-            timeout: 2000,
-            actionHandler: function(ev) {},
-            actionText: 'OK'
-        };
-        snackbarContainer.MaterialSnackbar.showSnackbar(data);
-    }
-
+    window.snackbar('Er is een fout opgetreden. Mogelijk dat je hier last van ondervindt.');
 });
 
 
@@ -101,7 +106,7 @@ window.addEventListener('error', function (ev) {
 
 if (!Array.prototype.forEach) {
 
-    Array.prototype.forEach = function(callback, thisArg) {
+    Array.prototype.forEach = function (callback, thisArg) {
 
         var T, k;
 

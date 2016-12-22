@@ -39,5 +39,5 @@ app.use('/assets', express.static('./assets'));
 
 app.use('/', express.static('./root-assets'));
 
-console.log('listening on 8080');
-app.listen(8080);
+console.log('listening on 3000');
+app.listen(3000);
