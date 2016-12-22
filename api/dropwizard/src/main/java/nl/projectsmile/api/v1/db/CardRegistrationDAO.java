@@ -21,4 +21,8 @@ public class CardRegistrationDAO extends AbstractDAO<CardRegistration> {
 	public List<CardRegistration> getCardRegistrationsByCardId(String cardId) {
 		return list(namedQuery("getCardRegistrationsByCardId").setParameter("cardId", cardId));
 	}
+
+	public List<CardRegistration> getSimilarCardRegistrationsByCardId(String cardId) {
+		return list(namedQuery("getSimilarCardRegistrationsByCardId").setParameter("cardId", cardId));
+	}
 }

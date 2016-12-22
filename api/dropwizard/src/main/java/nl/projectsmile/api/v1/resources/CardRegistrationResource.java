@@ -76,6 +76,17 @@ public class CardRegistrationResource {
 	}
 
 
+	/**
+	 * Gets the registrations for cards with the same template
+	 */
+	@GET
+	@Path("/similar")
+	@UnitOfWork
+	public List<CardRegistration> getSimilarCardRegistrations(@PathParam("cardId") String cardId) {
+		return cardRegistrationDAO.getSimilarCardRegistrationsByCardId(cardId);
+	}
+
+
 	@POST
 	@Path("/selfie")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
