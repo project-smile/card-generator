@@ -4,6 +4,7 @@ import io.dropwizard.Configuration;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dropwizard.db.DataSourceFactory;
 import lombok.Data;
+import nl.projectsmile.api.v1.core.CORSConfiguration;
 import org.hibernate.validator.constraints.*;
 
 import javax.validation.Valid;
@@ -23,5 +24,12 @@ public class ServerConfiguration extends Configuration {
 	@NotNull
 	@JsonProperty("selfies")
 	private SelfieUploadConfiguration selfieUploadConfig;
+
+
+	@Valid
+	@NotNull
+	@JsonProperty("cors")
+	private CORSConfiguration corsConfig;
+
 
 }

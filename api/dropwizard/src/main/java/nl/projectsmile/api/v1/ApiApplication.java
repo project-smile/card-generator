@@ -7,6 +7,7 @@ import io.dropwizard.flyway.FlywayFactory;
 import io.dropwizard.hibernate.HibernateBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import nl.projectsmile.api.v1.core.CORSFilter;
 import nl.projectsmile.api.v1.db.CardRegistration;
 import nl.projectsmile.api.v1.db.CardRegistrationDAO;
 import nl.projectsmile.api.v1.db.UploadedSelfie;
@@ -55,6 +56,7 @@ public class ApiApplication extends Application<ServerConfiguration> {
 		final UploadedSelfieDAO uploadedSelfieDAO = new UploadedSelfieDAO(hibernate.getSessionFactory());
 		final CardRegistrationDAO cardRegistrationDAO = new CardRegistrationDAO(hibernate.getSessionFactory());
 
+		environment.jersey().register(new CORSFilter(config.getCorsConfig()));
 		environment.jersey().register(new CardRegistrationResource(config.getSelfieUploadConfig(), uploadedSelfieDAO, cardRegistrationDAO));
 		environment.jersey().register(new ImageResource(config.getSelfieUploadConfig().getFileDirectory()));
 		environment.jersey().register(MultiPartFeature.class);

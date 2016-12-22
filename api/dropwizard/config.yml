@@ -9,6 +9,14 @@ server:
       bindHost: 127.0.0.1
       idleTimeout: 15 seconds
 
+cors:
+  enabled: true
+  allowedHostnames:
+    - https://localhost:3000
+    - http://localhost:3000
+    - http://projectsmile.nl
+    - https://projectsmile.nl
+
 database:
   # the name of your JDBC driver
   driverClass: org.h2.Driver
