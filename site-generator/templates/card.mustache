@@ -12,26 +12,26 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="mobile-web-app-capable" content="yes">
 
-    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/apple-touch-icon-57x57.png" />
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/apple-touch-icon-114x114.png" />
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/apple-touch-icon-72x72.png" />
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144x144.png" />
-    <link rel="apple-touch-icon-precomposed" sizes="60x60" href="/apple-touch-icon-60x60.png" />
-    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="/apple-touch-icon-120x120.png" />
-    <link rel="apple-touch-icon-precomposed" sizes="76x76" href="/apple-touch-icon-76x76.png" />
-    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="/apple-touch-icon-152x152.png" />
-    <link rel="icon" type="image/png" href="/favicon-196x196.png" sizes="196x196" />
-    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32" />
-    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16" />
-    <link rel="icon" type="image/png" href="/favicon-128.png" sizes="128x128" />
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/apple-touch-icon-57x57.png"/>
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/apple-touch-icon-114x114.png"/>
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/apple-touch-icon-72x72.png"/>
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144x144.png"/>
+    <link rel="apple-touch-icon-precomposed" sizes="60x60" href="/apple-touch-icon-60x60.png"/>
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="/apple-touch-icon-120x120.png"/>
+    <link rel="apple-touch-icon-precomposed" sizes="76x76" href="/apple-touch-icon-76x76.png"/>
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="/apple-touch-icon-152x152.png"/>
+    <link rel="icon" type="image/png" href="/favicon-196x196.png" sizes="196x196"/>
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96"/>
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32"/>
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16"/>
+    <link rel="icon" type="image/png" href="/favicon-128.png" sizes="128x128"/>
     <meta name="application-name" content="ProjectSmile"/>
-    <meta name="msapplication-TileColor" content="#FFFFFF" />
-    <meta name="msapplication-TileImage" content="mstile-144x144.png" />
-    <meta name="msapplication-square70x70logo" content="mstile-70x70.png" />
-    <meta name="msapplication-square150x150logo" content="mstile-150x150.png" />
-    <meta name="msapplication-wide310x150logo" content="mstile-310x150.png" />
-    <meta name="msapplication-square310x310logo" content="mstile-310x310.png" />
+    <meta name="msapplication-TileColor" content="#FFFFFF"/>
+    <meta name="msapplication-TileImage" content="mstile-144x144.png"/>
+    <meta name="msapplication-square70x70logo" content="mstile-70x70.png"/>
+    <meta name="msapplication-square150x150logo" content="mstile-150x150.png"/>
+    <meta name="msapplication-wide310x150logo" content="mstile-310x150.png"/>
+    <meta name="msapplication-square310x310logo" content="mstile-310x310.png"/>
 
     <meta http-equiv="cache-control" content="max-age=0"/>
     <meta http-equiv="cache-control" content="no-cache"/>
@@ -48,6 +48,7 @@
     <title>Project Smile - Dit is jouw kaartje</title>
 
     <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.teal-orange.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
     <!-- Custom CSS -->
     <link href="/assets/css/card-welcome.css" rel="stylesheet">
 
@@ -65,36 +66,29 @@
             message: '{{ message }}'
         };
     </script>
-    <script type="text/javascript" src="/assets/js/general.js"></script>
-    <script type="text/javascript">
-        function iHaveIt() {
-            document.body.classList.add('exiting');
-            window.setTimeout(function () {
-                window.location.href = 'register.html';
-            }, 1500);
-            return false; // do not follow the link
-        }
-
-        function moreInfo() {
-            document.body.classList.add('exiting');
-            window.setTimeout(function () {
-                window.location.href = 'moreinfo.html';
-            }, 1500);
-            return false; // do not follow the link
-        }
-    </script>
 </head>
 
 <body class="card-welcome">
 
 <div class="card-welcome">
-    <div class="share-card">
+    <p class="message">"{{ message }}"</p>
+    <div class="spacing">
+        <div class="wrapper" onmouseup="moveDown()" track-event="card-welcome-arrow-down">
+        <a class="arrow bounce"></a>
+        </div>
     </div>
 
-    <p>"{{ message }}"</p>
-    <div class="container">
-        <a class="button ihaveit continue" track-event="card-welcome-ihaveit" onclick="return iHaveIt()" href="register.html">Ik heb het kaartje!</a>
-        <a class="button moreinfo continue" track-event="card-welcome-moreinfo" onclick="return moreInfo()" href="moreinfo.html">Meer informatie</a>
+    <div class="information">
+        <h3>Leuk dat je hier bent.</h3>
+        <p>
+            Waarschijnlijk heb je net dit kaartje ontvangen. Ik hoop dat je het leuk vindt!
+        </p>
+
+        <h3>Delen</h3>
+        <p>Deel</p>
+        <p>
+            <button class="button ihaveit continue" track-event="card-welcome-ihaveit" onclick="return iHaveIt()">Ik heb het kaartje!</button>
+        </p>
     </div>
 </div>
 
@@ -103,6 +97,27 @@
     <button class="mdl-snackbar__action" type="button"></button>
 </div>
 
+<script type="text/javascript" src="/assets/js/general.js"></script>
+<script type="text/javascript" src="/assets/js/smoothscroll.js"></script>
+<script type="text/javascript">
+    function iHaveIt() {
+        document.body.classList.add('exiting');
+        window.setTimeout(function () {
+            window.location.href = 'register.html';
+        }, 1500);
+        return false; // do not follow the link
+    }
+
+    function moveDown() {
+        document.querySelector('.information').scrollIntoView({ behavior: 'smooth' });
+
+    }
+
+    window.addEventListener('scroll', function() {
+        document.querySelector('.arrow').classList.remove('bounce');
+        document.querySelector('.arrow').classList.remove('bounce');
+    });
+</script>
 <script defer src="https://code.getmdl.io/1.2.1/material.min.js"></script>
 </body>
 </html>
