@@ -2,6 +2,13 @@ selfies:
   fileDirectory: /tmp
   baseUrl: http://localhost:8080/image
 
+server:
+  applicationConnectors:
+    - type: http
+      port: 8080
+      bindHost: 127.0.0.1
+      idleTimeout: 15 seconds
+
 database:
   # the name of your JDBC driver
   driverClass: org.h2.Driver
@@ -50,3 +57,12 @@ logging:
 
   loggers:
     "nl.projectsmile": DEBUG
+
+#  appenders:
+#    - type: file
+#      currentLogFilename: projectsmile.log
+#      threshold: ALL
+#      archive: true
+#      archivedLogFilenamePattern: /var/log/projectsmile-%d.log
+#      archivedFileCount: 5
+#      timeZone: UTC
