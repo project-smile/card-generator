@@ -1,19 +1,3 @@
-switch (window.config.env) {
-    case 'dev':
-        window.config.registration = {
-            submitUrl: '/register',
-            imageUploadUrl: '/submit'
-        };
-        break;
-
-    case 'prd':
-        window.config.registration = {
-            submitUrl: 'https://f2dirw9cc0.execute-api.eu-west-1.amazonaws.com/dev/registration',
-            imageUploadUrl: 'https://f2dirw9cc0.execute-api.eu-west-1.amazonaws.com/dev/registration/photo'
-        };
-        break;
-}
-
 function Registration() {
 
     var registration = this;

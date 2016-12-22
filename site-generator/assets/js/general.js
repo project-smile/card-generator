@@ -9,12 +9,14 @@ var isProduction = function() { return window.location.hostname.lastIndexOf('pro
 if (isProduction()) {
     window.config = {
         env: 'prd',
-        uaCode: 'UA-85533742-1'
+        uaCode: 'UA-85533742-1',
+        apiBaseUrl: 'https://api.projectsmile.nl/v1'
     };
 } else {
     window.config = {
         env: 'dev',
-        uaCode: 'UA-85533742-2'
+        uaCode: 'UA-85533742-2',
+        apiBaseUrl: 'http://localhost:8080'
     };
 }
 
