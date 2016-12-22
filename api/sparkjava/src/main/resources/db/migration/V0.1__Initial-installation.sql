@@ -147,3 +147,5 @@ INSERT INTO card (id, message_id) VALUES ('67D', 1);
 INSERT INTO card (id, message_id) VALUES ('B9C', 1);
 INSERT INTO card (id, message_id) VALUES ('NVJ', 1);
 INSERT INTO card (id, message_id) VALUES ('1V8', 1);
+
+INSERT INTO card_registration (id, cardId) VALUES ('9b24493e-6e04-4f54-9957-f9004324bb32', 'BGD');

@@ -1,8 +1,10 @@
 package nl.projectsmile.api.sparkjavaserver;
 
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.sql.SQLQueryFactory;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
+import nl.projectsmile.api.sparkjavaserver.api.CardRegistration;
 import nl.projectsmile.api.sparkjavaserver.domain.QCardMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +19,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
+import static nl.projectsmile.api.sparkjavaserver.domain.QCardRegistration.cardRegistration;
 import static spark.Spark.before;
 import static spark.Spark.exception;
 import static spark.Spark.get;
@@ -29,21 +33,50 @@ public class Main {
 	private static final Logger LOGGER = LoggerFactory.getLogger(Main.class);
 	private static final Config CONFIG = ConfigFactory.load();
 
+	private static SQLQueryFactory db;
+
 	public static void main(String[] args) {
 		Database.init();
+		db = Database.getSqlQueryFactory();
 
-		final SQLQueryFactory queryFactory = Database.getSqlQueryFactory();
-
-		java.util.List<String> fetch = queryFactory.select(QCardMessage.cardMessage.message).from(QCardMessage.cardMessage).fetch();
+		java.util.List<String> fetch = db.select(QCardMessage.cardMessage.message).from(QCardMessage.cardMessage).fetch();
 		fetch.forEach(System.out::println);
 
 		port(4567);
+
 		exception(Exception.class, (e, request, response) -> {
 			LOGGER.error("Unexpected exception", e);
 		});
 
 		enableCORS("*", "POST, GET", "*");
 
+		getCardRegistrationsEndpoint();
+		imageRetrievalEndpoint();
+		photoResizeEndpoint();
+	}
+
+	private static void getCardRegistrationsEndpoint() {
+		get("/card/:cardId/registrations", (req, res) -> {
+			final String cardId = req.params("cardId");
+
+			return db.select(cardRegistration.id, cardRegistration.firstName, cardRegistration.location)
+					.from(cardRegistration)
+					.where(cardRegistration.cardid.eq(cardId))
+					.fetch()
+					.stream()
+					.map((tuple) -> {
+						return CardRegistration.builder()
+								.cardId(tuple.get(Expressions.stringPath("id")))
+								.build();
+					})
+					.collect(Collectors.toList());
+		});
+	}
+
+	/**
+	 * Note that this is only for DEV purposes. In PRD NGINX or a CDN takes care of this.
+	 */
+	private static void imageRetrievalEndpoint() {
 		get("/images/:imageId", (req, res) -> {
 			// TODO: check for invalid names
 			final String imageId = req.params("imageId");
@@ -63,8 +96,6 @@ public class Main {
 			raw.getOutputStream().close();
 			return raw;
 		});
-
-		photoResizeEndpoint();
 	}
 
 
