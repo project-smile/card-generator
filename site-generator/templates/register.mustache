@@ -60,7 +60,7 @@
     <script type="text/javascript" src="/assets/js/register.js"></script>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
     <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.teal-orange.min.css">
 
     <script type="text/javascript">
@@ -76,7 +76,7 @@
 
 <body>
 
-<div class="loading">
+<div class="loading" id="loading">
     <div class="mdl-spinner mdl-js-spinner is-active"></div>
 </div>
 
@@ -147,7 +147,7 @@
             <footer>
                 <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button-accent"
                         track-event="register-confirm-save"
-                        onclick="return registration.submit()">
+                        onclick="return registration.submit('finished')">
                     Opslaan!
                 </button>
             </footer>

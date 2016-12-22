@@ -14,14 +14,12 @@ function Registration() {
 
 
     this.submit = function (state) {
-        console.log('Submitting state: ' + state);
-
         switch (state) {
 
             case 'first_page':
             {
-                registration.formData.firstname = 'Sample Name';
-                registration.formData.location = 'Sample Location';
+                registration.formData.firstname = document.getElementById('name').value;
+                registration.formData.location = document.getElementById('location').value;
                 gotoState('selfie');
             }
                 break;
@@ -34,9 +32,38 @@ function Registration() {
             }
                 break;
 
+            case 'finished':
+            {
+                window.loadingDialog.show();
+
+                // submit everything
+                var oReq = new XMLHttpRequest();
+                oReq.open("POST", window.config.apiBaseUrl + "/card/" + window.card.cardId + "/registration", true);
+                oReq.setRequestHeader("Content-Type", "application/json");
+                oReq.onload = function () {
+                    window.loadingDialog.hide();
+
+                    if (oReq.status == 200) {
+                        // var regId = oReq.responseText;
+                        // success, go to next page.
+                        gotoState('finished');
+                    } else {
+                        // an error occurred
+                        snackbar('Er is iets fout gegaan. Sorry');
+                        window.trackError('Error in submitRegistration. Response=' + oReq.status, oReq.status);
+                    }
+
+                    registration.form.querySelector('div.selfie').classList.remove('uploading');
+                };
+
+                oReq.send(JSON.stringify(registration.formData));
+            }
+                break;
+
             default:
                 // try to submit everything...
-                gotoState('finished');
+                window.snackbar('Er is iets foutgegaan, sorry.');
+                window.trackError('Unknown state transition. Requested state=' + state, state);
         }
 
         return false;
@@ -62,6 +89,7 @@ function Registration() {
                 var selfieData = JSON.parse(oReq.responseText);
                 var imageElem = document.getElementById('selfiePicture');
                 imageElem.src = selfieData.uri;
+                registration.formData.selfieUploadId = selfieData.id;
                 imageElem.style.display = 'block';
                 // enable the next button
                 registration.form.querySelector('section.selfie button').removeAttribute('disabled');
@@ -69,6 +97,7 @@ function Registration() {
             } else {
                 // an error occurred
                 snackbar('Je selfie kon niet geupload worden. Sorry');
+                window.trackError('Error in submitRegistration. Response=' + oReq.status, oReq.status);
             }
 
             registration.form.querySelector('div.selfie').classList.remove('uploading');

@@ -18,7 +18,7 @@ public class CORSFilter implements ContainerResponseFilter {
 
 		if (config.getAllowedHostnames().contains(origin)) {
 			response.getHeaders().add("Access-Control-Allow-Origin", origin);
-			response.getHeaders().add("Access-Control-Allow-Headers", "*");
+			response.getHeaders().add("Access-Control-Allow-Headers", "Content-Type, Accept, Accept-Language, User-Agent, Referer");
 			response.getHeaders().add("Access-Control-Allow-Credentials", "true");
 			response.getHeaders().add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD");
 		}

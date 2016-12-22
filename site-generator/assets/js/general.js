@@ -68,6 +68,23 @@ document.addEventListener('DOMContentLoaded', function () {
         document.body.classList.add('fade-in');
     });
 
+    window.loadingDialog = (function () {
+        var loading = document.getElementById('loading');
+
+        this.show = function () {
+            if (loading) {
+                loading.classList.add('visible');
+            }
+        };
+
+        this.hide = function () {
+            if (loading) {
+                loading.classList.remove('visible');
+            }
+        };
+
+        return this;
+    })();
 
 });
 
@@ -85,16 +102,19 @@ window.snackbar = function (message, timeout) {
     }
 };
 
-// generic error handling, and informing the user about this error.
-window.addEventListener('error', function (ev) {
-    // log this error to GA
+window.trackError = function (message, details) {
     ga('send', {
         hitType: 'event',
         eventCategory: 'error',
-        eventAction: ev.message,
-        eventLabel: JSON.stringify(ev)
+        eventAction: message,
+        eventLabel: details
     });
+};
 
+// generic error handling, and informing the user about this error.
+window.addEventListener('error', function (ev) {
+    // log this error to GA
+    window.trackError(ev.message, JSON.stringify(ev));
     window.snackbar('Er is een fout opgetreden. Mogelijk dat je hier last van ondervindt.');
 });
 
