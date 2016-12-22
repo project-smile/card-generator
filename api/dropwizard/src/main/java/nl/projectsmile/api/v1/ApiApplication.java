@@ -5,16 +5,15 @@ import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.flyway.FlywayBundle;
 import io.dropwizard.flyway.FlywayFactory;
 import io.dropwizard.hibernate.HibernateBundle;
-import io.dropwizard.jdbi.DBIFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import nl.projectsmile.api.v1.db.CardRegistration;
+import nl.projectsmile.api.v1.db.CardRegistrationDAO;
 import nl.projectsmile.api.v1.db.UploadedSelfie;
 import nl.projectsmile.api.v1.db.UploadedSelfieDAO;
 import nl.projectsmile.api.v1.resources.CardRegistrationResource;
 import nl.projectsmile.api.v1.resources.ImageResource;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
-import org.skife.jdbi.v2.DBI;
 
 public class ApiApplication extends Application<ServerConfiguration> {
 
@@ -52,24 +51,13 @@ public class ApiApplication extends Application<ServerConfiguration> {
 	}
 
 	@Override
-	public void run(final ServerConfiguration config,
-					final Environment environment) {
-
-		environment.jersey().register(MultiPartFeature.class);
-
-//		final SimpleHealthCheck healthCheck = new SimpleHealthCheck(config.getTemplate());
-//		environment.healthChecks().register("template", healthCheck);
-
-		final DBIFactory factory = new DBIFactory();
-		final DBI jdbi = factory.build(environment, config.getDataSourceFactory(), "h2");
-
-
-//		final UserDAO dao = jdbi.onDemand(UserDAO.class);
-//		environment.jersey().register(new UserResource(dao));
-
+	public void run(final ServerConfiguration config, final Environment environment) {
 		final UploadedSelfieDAO uploadedSelfieDAO = new UploadedSelfieDAO(hibernate.getSessionFactory());
-		environment.jersey().register(new CardRegistrationResource(config.getSelfieUploadConfig(), uploadedSelfieDAO));
+		final CardRegistrationDAO cardRegistrationDAO = new CardRegistrationDAO(hibernate.getSessionFactory());
+
+		environment.jersey().register(new CardRegistrationResource(config.getSelfieUploadConfig(), uploadedSelfieDAO, cardRegistrationDAO));
 		environment.jersey().register(new ImageResource(config.getSelfieUploadConfig().getFileDirectory()));
+		environment.jersey().register(MultiPartFeature.class);
 	}
 
 }

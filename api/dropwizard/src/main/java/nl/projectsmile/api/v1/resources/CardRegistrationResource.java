@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import nl.projectsmile.api.v1.SelfieUploadConfiguration;
 import nl.projectsmile.api.v1.api.NewRegistration;
 import nl.projectsmile.api.v1.db.CardRegistration;
+import nl.projectsmile.api.v1.db.CardRegistrationDAO;
 import nl.projectsmile.api.v1.db.UploadedSelfie;
 import nl.projectsmile.api.v1.db.UploadedSelfieDAO;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
@@ -25,7 +26,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -35,26 +36,46 @@ public class CardRegistrationResource {
 
 	private final SelfieUploadConfiguration config;
 	private final UploadedSelfieDAO uploadedSelfieDAO;
+	private final CardRegistrationDAO cardRegistrationDAO;
 
-	public CardRegistrationResource(SelfieUploadConfiguration config, UploadedSelfieDAO uploadedSelfieDAO) {
+	public CardRegistrationResource(SelfieUploadConfiguration config, UploadedSelfieDAO uploadedSelfieDAO, CardRegistrationDAO cardRegistrationDAO) {
 		this.config = config;
 		this.uploadedSelfieDAO = uploadedSelfieDAO;
+		this.cardRegistrationDAO = cardRegistrationDAO;
 	}
 
 	@POST
-	public void registerCard(@PathParam("cardId") String cardId, NewRegistration newRegistration) {
+	@UnitOfWork
+	public String registerCard(@PathParam("cardId") String cardId, NewRegistration newRegistration) {
+		final String registrationId = UUID.randomUUID().toString();
 
+		String selfieUri = null;
+		if (newRegistration.getSelfieUploadId() != null) {
+			final UploadedSelfie uploadedSelfie = uploadedSelfieDAO.findById(newRegistration.getSelfieUploadId());
+			selfieUri = uploadedSelfie.getUri();
+		}
+
+		final CardRegistration registration = CardRegistration.builder()
+				.cardId(cardId)
+				.id(registrationId)
+				.firstName(newRegistration.getFirstname())
+				.latitude(newRegistration.getLatitude())
+				.longitude(newRegistration.getLongitude())
+				.location(newRegistration.getLocation())
+				.selfieUri(selfieUri)
+				.build();
+
+		cardRegistrationDAO.create(registration);
+		return registrationId;
 	}
 
 	@GET
-	public java.util.List<CardRegistration> getCardRegistrations(@PathParam("cardId") String cardId) {
-		return Collections.emptyList();
+	@UnitOfWork
+	public List<CardRegistration> getCardRegistrations(@PathParam("cardId") String cardId) {
+		return cardRegistrationDAO.getCardRegistrationsByCardId(cardId);
 	}
 
 
-	/**
-	 * TODO: upload to database
-	 */
 	@POST
 	@Path("/selfie")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)

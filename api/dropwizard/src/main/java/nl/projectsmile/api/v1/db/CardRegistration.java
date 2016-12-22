@@ -2,16 +2,17 @@ package nl.projectsmile.api.v1.db;
 
 import lombok.Builder;
 import lombok.Data;
-import org.joda.time.DateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity(name = "card_registration")
 @Data
+@NamedQuery(name="getCardRegistrationsByCardId", query="select reg from nl.projectsmile.api.v1.db.CardRegistration reg where cardId = :cardId")
 public class CardRegistration {
 	@Id
 	@Column(name = "id")

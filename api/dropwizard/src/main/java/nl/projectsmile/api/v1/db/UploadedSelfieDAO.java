@@ -8,7 +8,7 @@ public class UploadedSelfieDAO extends AbstractDAO<UploadedSelfie> {
 		super(sessionFactory);
 	}
 
-	public UploadedSelfie findById(Long id) {
+	public UploadedSelfie findById(String id) {
 		return get(id);
 	}
 
