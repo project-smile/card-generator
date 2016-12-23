@@ -1,3 +1,8 @@
+if (location.protocol != 'https:')
+{
+    location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+}
+
 function Registration() {
 
     var registration = this;
@@ -122,10 +127,15 @@ function Registration() {
             } else {
                 // an error occurred
                 snackbar('Je selfie kon niet geupload worden. Sorry');
-                window.trackError('Error in submitRegistration. Response=' + oReq.status, oReq.status);
+                window.trackError('Error in uploadSelfie. Response=' + oReq.status, oReq.status);
             }
 
             registration.form.querySelector('div.selfie').classList.remove('uploading');
+        };
+
+        oReq.onerror = function(err) {
+            snackbar('Je selfie kon niet geupload worden. Sorry');
+            window.trackError('SelfieError: XMLHTTPRequst. Err=' + JSON.stringify(err), JSON.stringify(err));
         };
 
         oReq.send(dataimg);
