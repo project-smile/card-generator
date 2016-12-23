@@ -36,7 +36,7 @@ app.post('/submit', multer({dest:'./'}).single('selfie'), function(req, res) {
 });
 
 app.get('/status', function(req, res) {
-   res.status(200).send({status:'maintenance'});
+   res.status(200).send({status:'ok'});
 });
 
 app.use('/assets', express.static('./assets'));

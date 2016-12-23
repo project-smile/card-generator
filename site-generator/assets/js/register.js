@@ -74,7 +74,7 @@ function Registration() {
                     window.loadingDialog.hide();
 
                     if (oReq.status == 200) {
-                        // var regId = oReq.responseText;
+                        // var regId = req.responseText;
                         // success, go to next page.
                         gotoState('finished');
                         window.trackInfoEvent('card-registered', window.card.cardId);

@@ -39,7 +39,7 @@ ga('send', 'pageview');
 
 
 document.addEventListener('DOMContentLoaded', function () {
-    ga('set', 'dimension1', window.card.cardId ? window.card.cardId : 'unknown'); // dimension1 = card
+    ga('set', 'dimension1', window.card && window.card.cardId ? window.card.cardId : 'unknown'); // dimension1 = card
 
 
     document.querySelectorAll('[track-event]').forEach(function (elem) {
