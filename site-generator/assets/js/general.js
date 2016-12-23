@@ -122,7 +122,7 @@ window.trackError = function (message, details) {
 
 window.maintenance = (function () {
     var req = new XMLHttpRequest();
-    req.open('GET', window.config.apiBaseUrl + '/status', true);
+    req.open('GET', '/status', true);
     req.onload = function () {
         if (req.status != 200 && req.status != 404) { // 404 = status is not implemented somehow
             showMaintenance();
