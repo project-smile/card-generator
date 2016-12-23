@@ -102,6 +102,15 @@ window.snackbar = function (message, timeout) {
     }
 };
 
+window.trackInfoEvent = function(event, details) {
+    ga('send', {
+        hitType: 'event',
+        eventCategory: 'info',
+        eventAction: event,
+        eventLabel: details
+    });
+};
+
 window.trackError = function (message, details) {
     ga('send', {
         hitType: 'event',

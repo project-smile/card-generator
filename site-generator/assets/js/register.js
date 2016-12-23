@@ -13,6 +13,28 @@ function Registration() {
     });
 
 
+    // try to get the geo location. Probably won't work anywhere. Well, we can try.
+    (function getGeolocation() {
+        if (navigator.geolocation) {
+            try {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    window.trackInfoEvent('geolocation-success');
+                    registration.formData.latitude = position.coords.latitude;
+                    registration.formData.longitude = position.coords.longitude;
+                }, function (error) {
+                    window.trackInfoEvent('geolocation-denied', JSON.stringify(error));
+                }, {
+                    enableHighAccuracy: false
+                });
+            } catch (e) {
+                trackError("Exception in getCurrentPosition", JSON.stringify(e));
+            }
+        } else {
+            window.trackInfoEvent('no-geolocation');
+        }
+    })();
+
+
     this.submit = function (state) {
         switch (state) {
 
