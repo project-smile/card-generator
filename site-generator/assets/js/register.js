@@ -52,7 +52,7 @@ function Registration() {
             case 'selfie':
             {
                 // immediately go to the next state if there was no image uploaded
-                initMap();
+                initMap(registration.formData);
                 gotoState('confirm');
             }
                 break;
@@ -185,12 +185,16 @@ function initGoogleMaps() {
 }
 
 var mapInitialized = false;
-function initMap() {
+function initMap(formData) {
+
+    var latitude = formData.location_latitude || formData.user_latitude || 51.9814708;
+    var longitude = formData.location_longitude || formData.user_longitude || 5.1163364;
+
     if (mapInitialized) return true;
     mapInitialized = true;
     var mapOptions = {
         zoom: 10,
-        center: new google.maps.LatLng(51.9814708, 5.1163364),
+        center: new google.maps.LatLng(latitude, longitude),
         scrollwheel: false,
         disableDefaultUI: true,
         styles: [
@@ -501,7 +505,8 @@ function initMap() {
     var map = new google.maps.Map(mapElement, mapOptions);
 
     var infowindow = new google.maps.InfoWindow();
-    infowindow.setContent('<div><b>Dit ben ik</b></div>');
+    var naam = formData.firstname || 'Anoniem';
+    infowindow.setContent('<div><b>'+naam+'</b></div>');
 
 
     var marker = new google.maps.Marker({
