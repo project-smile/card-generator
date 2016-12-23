@@ -16,4 +16,10 @@ public class CORSConfiguration {
 	@JsonProperty
 	@NotEmpty
 	private List<String> allowedHostnames;
+
+	@JsonProperty
+	@NotEmpty
+	private List<String> allowedHeaders;
+
+
 }

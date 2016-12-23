@@ -18,6 +18,14 @@ cors:
     - http://localhost:3000
     - http://projectsmile.nl
     - https://projectsmile.nl
+  allowedHeaders:
+    - Content-Type
+    - Accept
+    - Accept-Language
+    - User-Agent
+    - Referer
+    - DNT
+    - X-Requested-With
 
 database:
   # the name of your JDBC driver
