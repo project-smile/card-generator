@@ -78,7 +78,7 @@ public class CardRegistrationResource {
 	@UnitOfWork
 	public List<CardRegistration> getCardRegistrations(@PathParam("cardId") String cardId) {
 		if ("-".equals(cardId)) {
-			cardRegistrationDAO.getAllCardRegistrations();
+			return cardRegistrationDAO.getAllCardRegistrations();
 		}
 		return cardRegistrationDAO.getCardRegistrationsByCardId(cardId);
 	}
