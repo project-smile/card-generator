@@ -1,5 +1,5 @@
-if (location.protocol != 'https:')
-{
+// redirect to HTTPS.
+if (window.config.env === 'prd' && location.protocol !== 'https:') {
     location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
 }
 
