@@ -238,3 +238,16 @@ div.register section div.mdl-textfield input.pristine ~ label {
         position: inherit;
     }
 }
+
+div.maintenance {
+    z-index: 1000;
+    position: fixed;
+    height: 100%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    opacity: 0.7;
+    font-family: "Roboto", "Verdana", sans-serif;
+    text-align: center;
+}

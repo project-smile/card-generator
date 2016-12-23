@@ -102,7 +102,7 @@ window.snackbar = function (message, timeout) {
     }
 };
 
-window.trackInfoEvent = function(event, details) {
+window.trackInfoEvent = function (event, details) {
     ga('send', {
         hitType: 'event',
         eventCategory: 'info',
@@ -119,6 +119,46 @@ window.trackError = function (message, details) {
         eventLabel: details
     });
 };
+
+window.maintenance = (function () {
+    var req = new XMLHttpRequest();
+    req.open('GET', window.config.apiBaseUrl + '/status', true);
+    req.onload = function () {
+        if (req.status != 200 && req.status != 404) { // 404 = status is not implemented somehow
+            showMaintenance();
+        }
+        if (req.status == 200) {
+            try {
+                var response = JSON.parse(req.responseText);
+                if (response.status === 'maintenance') {
+                    showMaintenance();
+                }
+            } catch (e) {
+                window.trackError("statuspage returns invalid json", JSON.stringify(e));
+            }
+        }
+    };
+    req.send();
+
+    function showMaintenance() {
+        window.closeMaintenance = function () {
+            document.querySelector('div.maintenance').style.display = 'none';
+        };
+        // not OK.
+        var div = document.createElement("div");
+        div.classList.add("overlay");
+        div.classList.add("maintenance");
+
+        div.innerHTML = '<h1>Onderhoud</h1><p>Momenteel vindt er onderhoud aan onze website plaats.<br/> ' +
+            '<b>Het kan zijn dat een aantal functies niet goed werken.</b> ' +
+            '<br />Excuses voor het ongemak!</p><button class="button"' +
+            ' onclick="closeMaintenance();">Ik snap het!</button>';
+        document.body.append(div);
+        trackInfoEvent('maintenance-window', ''); // track that we show the maintenance window
+    }
+
+    return this;
+})();
 
 // generic error handling, and informing the user about this error.
 window.addEventListener('error', function (ev) {

@@ -35,6 +35,10 @@ app.post('/submit', multer({dest:'./'}).single('selfie'), function(req, res) {
     fs.createReadStream(__dirname + "/" + req.file.filename, 'base64').pipe(res);
 });
 
+app.get('/status', function(req, res) {
+   res.status(200).send({status:'maintenance'});
+});
+
 app.use('/assets', express.static('./assets'));
 
 app.use('/', express.static('./root-assets'));
