@@ -73,9 +73,13 @@ public class CardRegistrationResource {
 		return registrationId;
 	}
 
+	// TODO: add caching for this as it may increase load significantly
 	@GET
 	@UnitOfWork
 	public List<CardRegistration> getCardRegistrations(@PathParam("cardId") String cardId) {
+		if ("-".equals(cardId)) {
+			cardRegistrationDAO.getAllCardRegistrations();
+		}
 		return cardRegistrationDAO.getCardRegistrationsByCardId(cardId);
 	}
 

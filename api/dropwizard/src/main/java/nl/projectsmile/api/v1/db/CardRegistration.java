@@ -7,13 +7,17 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedNativeQuery;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity(name = "card_registration")
 @Data
-@NamedQuery(name = "getCardRegistrationsByCardId", query = "select reg from nl.projectsmile.api.v1.db.CardRegistration reg where cardId = :cardId")
+@NamedQueries({
+		@NamedQuery(name= "getAllCardRegistrations", query= "select reg from nl.projectsmile.api.v1.db.CardRegistration reg"),
+		@NamedQuery(name = "getCardRegistrationsByCardId", query = "select reg from nl.projectsmile.api.v1.db.CardRegistration reg where cardId = :cardId")
+})
 @NamedNativeQuery(name = "getSimilarCardRegistrationsByCardId", resultClass = CardRegistration.class,
 		query = "select * from card_registration reg where  reg.card_id in (select card.id from card card where card.message_id = (select message_id from card where id = :cardId))")
 public class CardRegistration {
@@ -61,7 +65,7 @@ public class CardRegistration {
 		this.location_latitude = location_latitude;
 		this.user_longitude = user_longitude;
 		this.user_latitude = user_latitude;
-		this.uploadedOn = uploadedOn;
+		this.uploadedOn = uploadedOn == null ? LocalDateTime.now() : uploadedOn;
 	}
 }
 

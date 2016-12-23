@@ -18,6 +18,10 @@ public class CardRegistrationDAO extends AbstractDAO<CardRegistration> {
 		persist(cardRegistration);
 	}
 
+	public List<CardRegistration> getAllCardRegistrations() {
+		return list(namedQuery("getAllCardRegistrations"));
+	}
+
 	public List<CardRegistration> getCardRegistrationsByCardId(String cardId) {
 		return list(namedQuery("getCardRegistrationsByCardId").setParameter("cardId", cardId));
 	}
