@@ -13,8 +13,8 @@ import java.time.LocalDateTime;
 
 @Entity(name = "card_registration")
 @Data
-@NamedQuery(name="getCardRegistrationsByCardId", query="select reg from nl.projectsmile.api.v1.db.CardRegistration reg where cardId = :cardId")
-@NamedNativeQuery(name="getSimilarCardRegistrationsByCardId", resultClass = CardRegistration.class,
+@NamedQuery(name = "getCardRegistrationsByCardId", query = "select reg from nl.projectsmile.api.v1.db.CardRegistration reg where cardId = :cardId")
+@NamedNativeQuery(name = "getSimilarCardRegistrationsByCardId", resultClass = CardRegistration.class,
 		query = "select * from card_registration reg where  reg.card_id in (select card.id from card card where card.message_id = (select message_id from card where id = :cardId))")
 public class CardRegistration {
 	@Id
@@ -31,12 +31,17 @@ public class CardRegistration {
 	private String selfieUri;
 
 
-	@Column(name = "longitude")
-	private BigDecimal longitude;
+	@Column(name = "location_longitude")
+	private BigDecimal location_longitude;
 
-	@Column(name = "latitude")
-	private BigDecimal latitude;
+	@Column(name = "location_latitude")
+	private BigDecimal location_latitude;
 
+	@Column(name = "user_longitude")
+	private BigDecimal user_longitude;
+
+	@Column(name = "user_latitude")
+	private BigDecimal user_latitude;
 
 	@Column(name = "registered_on")
 	private LocalDateTime uploadedOn;
@@ -46,17 +51,17 @@ public class CardRegistration {
 	}
 
 	@Builder
-	public CardRegistration(String id, String cardId, String firstName, String location, String selfieUri, BigDecimal longitude, BigDecimal latitude, LocalDateTime uploadedOn) {
+	public CardRegistration(String id, String cardId, String firstName, String location, String selfieUri, BigDecimal location_longitude, BigDecimal location_latitude, BigDecimal user_longitude, BigDecimal user_latitude, LocalDateTime uploadedOn) {
 		this.id = id;
 		this.cardId = cardId;
 		this.firstName = firstName;
 		this.location = location;
 		this.selfieUri = selfieUri;
-		this.longitude = longitude;
-
-		this.latitude = latitude;
+		this.location_longitude = location_longitude;
+		this.location_latitude = location_latitude;
+		this.user_longitude = user_longitude;
+		this.user_latitude = user_latitude;
 		this.uploadedOn = uploadedOn;
 	}
-
 }
 

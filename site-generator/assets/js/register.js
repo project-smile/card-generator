@@ -19,8 +19,8 @@ function Registration() {
             try {
                 navigator.geolocation.getCurrentPosition(function (position) {
                     window.trackInfoEvent('geolocation-success');
-                    registration.formData.latitude = position.coords.latitude;
-                    registration.formData.longitude = position.coords.longitude;
+                    registration.formData.user_latitude = position.coords.latitude;
+                    registration.formData.user_longitude = position.coords.longitude;
                 }, function (error) {
                     window.trackInfoEvent('geolocation-denied', JSON.stringify(error));
                 }, {
@@ -40,8 +40,11 @@ function Registration() {
 
             case 'first_page':
             {
+                var location = document.getElementById('location');
                 registration.formData.firstname = document.getElementById('name').value;
                 registration.formData.location = document.getElementById('location').value;
+                registration.formData.location_latitude = location.dataset.latitude ? parseFloat(location.dataset.latitude) : null;
+                registration.formData.location_longitude = location.dataset.longitude ? parseFloat(location.dataset.longitude) : null;
                 gotoState('selfie');
             }
                 break;
@@ -159,6 +162,18 @@ function initGoogleMaps() {
         south: 50.750384,
         west: 7.227510
     });
+
+    google.maps.event.addListener(searchBox, 'places_changed', function () {
+        input.dataset.latitude = null;
+        input.dataset.longitude = null;
+        var places = searchBox.getPlaces();
+        if (places && places.length >= 1) {
+            var geometry = places[0].geometry.location;
+            input.dataset.latitude = geometry.lat();
+            input.dataset.longitude = geometry.lng();
+        }
+    });
+
 
     // fix the placeholder from the location label as this messes with material design
     window.setTimeout(function () {

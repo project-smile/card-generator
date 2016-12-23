@@ -9,6 +9,9 @@ public class NewRegistration {
 	private String firstname;
 	private String location;
 	private String selfieUploadId;
-	private BigDecimal longitude;
-	private BigDecimal latitude;
+	private BigDecimal location_longitude;
+	private BigDecimal location_latitude;
+	private BigDecimal user_longitude;
+	private BigDecimal user_latitude;
+
 }

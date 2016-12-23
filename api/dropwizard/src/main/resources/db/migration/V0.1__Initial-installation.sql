@@ -18,8 +18,10 @@ CREATE TABLE card_registration (
   card_id        CHAR(3)       NOT NULL,
   first_name    VARCHAR(50)   NULL,
   location      VARCHAR(100)  NULL,
-  longitude     DECIMAL(9, 6) NULL,
-  latitude      DECIMAL(9, 6) NULL,
+  location_longitude     DECIMAL(9, 6) NULL,
+  location_latitude      DECIMAL(9, 6) NULL,
+  user_longitude     DECIMAL(9, 6) NULL,
+  user_latitude      DECIMAL(9, 6) NULL,
   selfie_uri    VARCHAR       NULL, -- URI. Could be local but could also be S3
   registered_on DATETIME DEFAULT CURRENT_TIMESTAMP(),
   CONSTRAINT fk_card_registration_card_id FOREIGN KEY (card_id) REFERENCES card (id) ON DELETE CASCADE

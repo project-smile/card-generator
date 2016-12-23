@@ -59,8 +59,10 @@ public class CardRegistrationResource {
 				.cardId(cardId)
 				.id(registrationId)
 				.firstName(newRegistration.getFirstname())
-				.latitude(newRegistration.getLatitude())
-				.longitude(newRegistration.getLongitude())
+				.user_latitude(newRegistration.getUser_latitude())
+				.user_longitude(newRegistration.getUser_longitude())
+				.location_latitude(newRegistration.getLocation_latitude())
+				.location_longitude(newRegistration.getLocation_longitude())
 				.location(newRegistration.getLocation())
 				.selfieUri(selfieUri)
 				.build();
