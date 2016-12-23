@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="description" content="Een glimlach is het mooiste dat je kunt dragen. Wat heeft jou vandaag doen glimlachen?">
+    <meta name="author" content="Sander de Groot">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <meta property="og:title" content="Project Smile - Brengt de glimlach weer terug op je gezicht"/>
+    <meta property="og:image" content="http://projectsmile.nl/img/smile-photo.jpeg"/>
+    <meta property="og:site_name" content="Project Smile"/>
+    <meta property="og:description"
+          content="Een glimlach is het mooiste dat je kunt dragen. Wat heeft jou vandaag doen glimlachen? Project Smile is een initatief om mensen op een ludieke manier te laten glimlachen."/>
+
+    <title>Project Smile - Wat heeft jou vandaag doen glimlachen?</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="assets/css/fullmap.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var sentiments = document.querySelectorAll('ul.sentiment');
+            sentiments.forEach(function (sentiment) {
+                var liItems = sentiment.querySelectorAll('li');
+                liItems.forEach(function (liItem) {
+                    liItem.addEventListener('click', function () {
+                        liItem.querySelector('input').checked = true;
+                        liItems.forEach(function (liItem) {
+                            liItem.classList.remove('selected');
+                        });
+                        liItem.classList.add('selected');
+                    });
+                });
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('div.overlay').forEach(function(overlay) {
+                overlay.addEventListener('click', function(ev) {
+                    if (ev.target === overlay) {
+                        overlay.classList.remove('visible');
+                    }
+                });
+            });
+        });
+        // setup event tracking
+        document.addEventListener('DOMContentLoaded', function() {
+            ga('set', 'dimension1', 'unknown'); // dimension1 = card
+
+
+            document.querySelectorAll('[track-event]').forEach(function(elem) {
+                elem.addEventListener('click', function() {
+                    ga('send', {
+                        hitType: 'event',
+                        eventCategory: 'button',
+                        eventAction: 'click',
+                        eventLabel: elem.getAttribute('track-event')
+                    });
+                });
+            });
+        });
+
+
+        //        try {
+        //            console.log('getting position');
+        //            var result = navigator.geolocation.getCurrentPosition(function (position) {
+        //                console.log('got data!');
+        //            }, function handleErr(err) {
+        //                console.log('got err: ');
+        //                console.log(err);
+        //            });
+        //            console.log('result = ' + result);
+        //        } catch (e ) {
+        //            console.log('error: ' + e);
+        //        }
+
+        function initMap() {
+            var input = document.getElementById('placesSearchBox');
+            var searchBox = new google.maps.places.SearchBox(input);
+
+            var mapOptions = {
+                zoom: 7,
+                center: new google.maps.LatLng(51.9814708, 5.1163364),
+                scrollwheel: false,
+                disableDefaultUI: true,
+                styles: [
+                    {
+                        "elementType": "geometry",
+                        "stylers": [
+                            {
+                                "color": "#1d2c4d"
+                            }
+                        ]
+                    },
+                    {
+                        "elementType": "labels.text.fill",
+                        "stylers": [
+                            {
+                                "color": "#8ec3b9"
+                            }
+                        ]
+                    },
+                    {
+                        "elementType": "labels.text.stroke",
+                        "stylers": [
+                            {
+                                "color": "#1a3646"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "administrative.country",
+                        "elementType": "geometry.stroke",
+                        "stylers": [
+                            {
+                                "color": "#4b6878"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "administrative.land_parcel",
+                        "stylers": [
+                            {
+                                "visibility": "off"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "administrative.land_parcel",
+                        "elementType": "labels.text.fill",
+                        "stylers": [
+                            {
+                                "color": "#64779e"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "administrative.neighborhood",
+                        "stylers": [
+                            {
+                                "visibility": "off"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "administrative.province",
+                        "elementType": "geometry.stroke",
+                        "stylers": [
+                            {
+                                "color": "#4b6878"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "landscape.man_made",
+                        "elementType": "geometry.stroke",
+                        "stylers": [
+                            {
+                                "color": "#334e87"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "landscape.natural",
+                        "elementType": "geometry",
+                        "stylers": [
+                            {
+                                "color": "#023e58"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "poi",
+                        "elementType": "geometry",
+                        "stylers": [
+                            {
+                                "color": "#283d6a"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "poi",
+                        "elementType": "labels.text",
+                        "stylers": [
+                            {
+                                "visibility": "off"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "poi",
+                        "elementType": "labels.text.fill",
+                        "stylers": [
+                            {
+                                "color": "#6f9ba5"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "poi",
+                        "elementType": "labels.text.stroke",
+                        "stylers": [
+                            {
+                                "color": "#1d2c4d"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "poi.business",
+                        "stylers": [
+                            {
+                                "visibility": "off"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "poi.park",
+                        "elementType": "geometry.fill",
+                        "stylers": [
+                            {
+                                "color": "#023e58"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "poi.park",
+                        "elementType": "labels.text",
+                        "stylers": [
+                            {
+                                "visibility": "off"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "poi.park",
+                        "elementType": "labels.text.fill",
+                        "stylers": [
+                            {
+                                "color": "#3C7680"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road",
+                        "stylers": [
+                            {
+                                "visibility": "off"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road",
+                        "elementType": "geometry",
+                        "stylers": [
+                            {
+                                "color": "#304a7d"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road",
+                        "elementType": "labels",
+                        "stylers": [
+                            {
+                                "visibility": "off"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road",
+                        "elementType": "labels.text.fill",
+                        "stylers": [
+                            {
+                                "color": "#98a5be"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road",
+                        "elementType": "labels.text.stroke",
+                        "stylers": [
+                            {
+                                "color": "#1d2c4d"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road.highway",
+                        "elementType": "geometry",
+                        "stylers": [
+                            {
+                                "color": "#2c6675"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road.highway",
+                        "elementType": "geometry.stroke",
+                        "stylers": [
+                            {
+                                "color": "#255763"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road.highway",
+                        "elementType": "labels.text.fill",
+                        "stylers": [
+                            {
+                                "color": "#b0d5ce"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road.highway",
+                        "elementType": "labels.text.stroke",
+                        "stylers": [
+                            {
+                                "color": "#023e58"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "transit",
+                        "elementType": "labels.text.fill",
+                        "stylers": [
+                            {
+                                "color": "#98a5be"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "transit",
+                        "elementType": "labels.text.stroke",
+                        "stylers": [
+                            {
+                                "color": "#1d2c4d"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "transit.line",
+                        "elementType": "geometry.fill",
+                        "stylers": [
+                            {
+                                "color": "#283d6a"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "transit.station",
+                        "elementType": "geometry",
+                        "stylers": [
+                            {
+                                "color": "#3a4762"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "water",
+                        "elementType": "geometry",
+                        "stylers": [
+                            {
+                                "color": "#0e1626"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "water",
+                        "elementType": "labels.text",
+                        "stylers": [
+                            {
+                                "visibility": "off"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "water",
+                        "elementType": "labels.text.fill",
+                        "stylers": [
+                            {
+                                "color": "#4e6d70"
+                            }
+                        ]
+                    }
+                ]
+            };
+
+            var mapElement = document.getElementById('map');
+
+            var map = new google.maps.Map(mapElement, mapOptions);
+
+            var marker = new google.maps.Marker({
+                position: map.getCenter(),
+                map: map,
+                title: 'Click to zoom'
+            });
+        }
+    </script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDjL6cvWIfMIFOkvpJtEKjsZFRe6oCXwN4&callback=initMap"></script>
+</head>
+
+<body class="full">
+
+<div id="fb-root"></div>
+<script>(function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "//connect.facebook.net/nl_NL/sdk.js#xfbml=1&version=v2.8&appId=923116497788604";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+<div id="map"></div>
+
+<img src="assets/img/logo.png" alt="Project Smile Logo" class="logo"/>
+
+<a onclick="document.getElementById('cardOverlay').classList.add('visible')" class="card-link" track-event="yourcard-button-topright">
+    <img src="assets/img/card-example.png" class="card-example elementToFadeInAndOut" alt="Jouw kaartje">
+</a>
+
+<div class="share overlay" id="shareOverlay">
+    <div class="content">
+
+        <div
+                class="fb-like"
+                data-share="true"
+                data-size="small"
+                data-layout="button"
+                data-show-faces="false">
+        </div>
+
+        <a href="https://twitter.com/share" class="twitter-share-button" data-text="Ik kreeg dit kaartje vandaag!" data-hashtags="projectsmile"
+           data-lang="nl" data-show-count="false">Tweet</a>
+        <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+        <button type="button" class="btn btn-primary btn-sm closeMe" track-event="shareoverlay-close"
+                onclick="document.getElementById('shareOverlay').classList.remove('visible')">
+            Sluiten
+        </button>
+
+    </div>
+</div>
+
+
+<div class="overlay" id="watisditOverlay">
+    <div class="content">
+
+        <h1>Project Smile</h1>
+        <p>Is ontstaan uit een behoefte om bij te dragen aan de maatschappij. Nederland is steeds meer aan het individualiseren en dat is geen
+            goede ontwikkeling. Project Smile is een van mijn manieren om de individualisering tegen te gaan.</p>
+        <p>Het doorgeven van een positieve boodschap aan een onbekend persoon is zeer krachtige manier om iemand blij te maken.</p>
+
+        <p>Project Smile is een idee van
+            <a href="https://www.linkedin.com/in/sdg91" target="_blank" track-event="watisditoverlay-sanderdegroot">Sander de Groot</a></p>
+
+        <button type="button" class="btn btn-primary btn-sm closeMe"
+                track-event="watisditoverlay-close" onclick="document.getElementById('watisditOverlay').classList.remove('visible')">
+            Sluiten
+        </button>
+
+    </div>
+</div>
+
+<div class="overlay" id="ikhebereenOverlay">
+    <div class="content">
+        <h1>Ik kreeg een kaartje!</h1>
+        <p>Gaaf, je hebt een kaartje gekregen! </p>
+
+        <form method="post" enctype="multipart/form-data">
+
+            <input type="text" placeholder="Je voornaam" name="firstname"/>
+
+            <p>Waar heb je dit kaartje gekregen?</p>
+            <input type="text" name="location" id="placesSearchBox" placeholder="Type de naam van de plek"/>
+
+            <p>Maak een selfie met het kaartje</p>
+            <input type="file" accept="image/*;capture=camera">
+
+            <p>Dit initatief is: </p>
+            <ul class="sentiment">
+                <li><input type="radio" value="&#128525;" name="sentiment"/>&#128525;</li><!-- smiling with heart eyes -->
+                <li><input type="radio" value="&#128516;" name="sentiment"/>&#128516;</li><!-- happy smile -->
+                <li class="selected"><input type="radio" value="&#128077;" name="sentiment" checked/>&#128077;</li><!-- thumbs up -->
+                <li><input type="radio" value="&#128078;" name="sentiment"/>&#128078;</li><!-- thumbs down -->
+                <li><input type="radio" value="&#128544;" name="sentiment"/>&#128544;</li><!-- angry -->
+            </ul>
+
+            <p>Ik geef mijn kaartje door</p>
+            <ul class="sentiment">
+                <li class="selected"><input type="radio" value="yes" name="sentiment" checked/>&#9989;</li><!-- yes -->
+                <li><input type="radio" value="no" name="sentiment"/>&#10060;</li><!-- no -->
+            </ul>
+
+            <input type="submit" value="Verstuur" class="btn btn-primary btn-sm"/>
+        </form>
+
+        <button type="button" class="btn btn-primary btn-sm closeMe" track-event="ikhebereenoverlay-close"
+                onclick="document.getElementById('ikhebereenOverlay').classList.remove('visible')">
+            Annuleren
+        </button>
+
+    </div>
+</div>
+
+<div class="overlay" id="cardOverlay">
+    <div class="content">
+        <p>Hier staat jouw kaartje</p>
+
+        <div class="card">
+            <img src="/assets/img/card-background.png" class="background" alt="card background"/>
+            <p class="message">Geniet elke dag alsof het je laatste is. Lach wanneer je kan!</p>
+        </div>
+
+        <button type="button" class="btn btn-primary btn-sm closeMe" track-event="cardoverlay-close"
+                onclick="document.getElementById('cardOverlay').classList.remove('visible')">
+            Sluiten
+        </button>
+
+    </div>
+</div>
+
+<footer>
+    <button type="button" class="btn btn-primary btn-sm" track-event="footer-ditvindikleuk"
+            onclick="document.getElementById('shareOverlay').classList.add('visible')">
+        Dit vind ik leuk
+    </button>
+    <button type="button" class="btn btn-primary btn-sm" track-event="footer-ikhebhem"
+            onclick="document.getElementById('ikhebereenOverlay').classList.add('visible')">
+        Ik heb hem!
+    </button>
+    <button type="button" class="btn btn-primary btn-sm" track-event="footer-watisdit"
+            onclick="document.getElementById('watisditOverlay').classList.add('visible')">
+        Wat is dit?
+    </button>
+</footer>
+
+<div class="under-construction" style="position: fixed; height: 100%; width: 100%; background-color: white; opacity: 0.8; top: 0; left: 0;
+text-align: center; color: black;">
+    <h2>Sorry, deze pagina is nog in de maak...</h2>
+    <p>Onze excuses. Deze pagina is nog niet niet klaar voor gebruik!</p>
+    <p>De verwachting is dat deze pagina uiterlijk 25 december beschikbaar zal zijn.</p>
+</div>
+
+
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    if (window.location.hostname.lastIndexOf('projectsmile.nl') > -1) {
+        // prd profile
+        ga('create', 'UA-85533742-1', 'auto');
+    } else {
+        //dev profile
+        ga('create', 'UA-85533742-2', 'auto');
+    }
+    ga('send', 'pageview');
+
+</script>
+
+</body>
+
+</html>

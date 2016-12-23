@@ -77,6 +77,7 @@ function Registration() {
                         // var regId = oReq.responseText;
                         // success, go to next page.
                         gotoState('finished');
+                        window.trackInfoEvent('card-registered', window.card.cardId);
                     } else {
                         // an error occurred
                         snackbar('Er is iets fout gegaan. Sorry');
