@@ -42,6 +42,8 @@ public class CardRegistrationResource {
 		this.config = config;
 		this.uploadedSelfieDAO = uploadedSelfieDAO;
 		this.cardRegistrationDAO = cardRegistrationDAO;
+
+		IMG_BOUNDARY = new Dimension(config.getMaxWidth(), config.getMaxHeight());
 	}
 
 	@POST
@@ -128,14 +130,43 @@ public class CardRegistrationResource {
 		return uploadedSelfie;
 	}
 
-	private static final int IMG_WIDTH = 100;
-	private static final int IMG_HEIGHT = 100;
+	private final Dimension IMG_BOUNDARY;
 
-	private static BufferedImage resizeImage(BufferedImage originalImage, int type) {
-		final BufferedImage resizedImage = new BufferedImage(IMG_WIDTH, IMG_HEIGHT, type);
+	private BufferedImage resizeImage(BufferedImage originalImage, int type) {
+		final Dimension originalDimension = new Dimension(originalImage.getWidth(), originalImage.getHeight());
+		final Dimension newDimensions = getScaledDimension(originalDimension, IMG_BOUNDARY);
+		final BufferedImage resizedImage = new BufferedImage(newDimensions.width, newDimensions.height, type);
 		final Graphics2D g = resizedImage.createGraphics();
-		g.drawImage(originalImage, 0, 0, IMG_WIDTH, IMG_HEIGHT, null);
+		g.drawImage(originalImage, 0, 0, newDimensions.width, newDimensions.height, null);
 		g.dispose();
 		return resizedImage;
+	}
+
+	private static Dimension getScaledDimension(Dimension imgSize, Dimension boundary) {
+
+		int original_width = imgSize.width;
+		int original_height = imgSize.height;
+		int bound_width = boundary.width;
+		int bound_height = boundary.height;
+		int new_width = original_width;
+		int new_height = original_height;
+
+		// first check if we need to scale width
+		if (original_width > bound_width) {
+			//scale width to fit
+			new_width = bound_width;
+			//scale height to maintain aspect ratio
+			new_height = (new_width * original_height) / original_width;
+		}
+
+		// then check if we need to scale even with the new height
+		if (new_height > bound_height) {
+			//scale height to fit instead
+			new_height = bound_height;
+			//scale width to maintain aspect ratio
+			new_width = (new_height * original_width) / original_height;
+		}
+
+		return new Dimension(new_width, new_height);
 	}
 }

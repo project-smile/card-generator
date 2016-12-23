@@ -1,6 +1,8 @@
 selfies:
   fileDirectory: /tmp
   baseUrl: http://localhost:8080/image
+  maxWidth: 500
+  maxHeight: 500
 
 server:
   applicationConnectors:
