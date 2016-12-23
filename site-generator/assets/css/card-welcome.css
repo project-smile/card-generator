@@ -83,15 +83,26 @@ body > div.card-welcome > div.spacing {
     z-index: 1;
 }
 
-body > div.card-welcome div.information {
+body > div.card-welcome div.information,
+body > div.card-welcome div.moreinfo {
     position: relative;
     top: 10vh;
     padding: 1.5em;
     font-family: "Roboto", "Verdana", sans-serif;
+    color: #D6D8DE !important;
+    background-image: url(/assets/img/logo.png);
+    background-position: right 1em top 1em;
+    background-repeat: no-repeat;
+    background-size: 4em;
 }
 
-body > div.card-welcome div.information h3 {
+body > div.card-welcome div.info {
+    min-height: 85vh;
+}
+
+body > div.card-welcome div.info h3 {
     font-size: 1.1em;
+    margin-bottom: 0px;
 }
 
 .button {
@@ -162,7 +173,7 @@ button {
     height: auto !important;
     min-width: 15em !important;
     text-decoration: none !important;
-    font-size: 0.8em !important;
+    font-size: 1em !important;
     text-transform: none !important;
     font-weight: normal !important;
 }

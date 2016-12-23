@@ -73,21 +73,39 @@
 <div class="card-welcome">
     <p class="message">"{{ message }}"</p>
     <div class="spacing">
-        <div class="wrapper" onmouseup="moveDown()" track-event="card-welcome-arrow-down">
-        <a class="arrow bounce"></a>
+        <div class="wrapper" onclick="moveDown('.information')" track-event="card-welcome-arrow-down">
+            <a class="arrow bounce"></a>
         </div>
     </div>
 
-    <div class="information">
-        <h3>Leuk dat je hier bent.</h3>
+    <div class="information info">
+        <h3>Leuk dat je hier bent!</h3>
         <p>
-            Waarschijnlijk heb je net dit kaartje ontvangen. Ik hoop dat je het leuk vindt!
+            Hoe was het om dit kaartje te ontvangen? <i>Leuk hè?</i> Daar doen we het dan ook precies om!
         </p>
 
-        <h3>Delen</h3>
-        <p>Deel</p>
+        <h3>Show your card!</h3>
+        <p>Aangezien de kaartjes doorgegeven worden, houden bij waar de kaartjes zijn geweest. We zouden het heel leuk vinden als jij ook mee wil
+            helpen!</p>
         <p>
-            <button class="button ihaveit continue" track-event="card-welcome-ihaveit" onclick="return iHaveIt()">Ik heb het kaartje!</button>
+            <button class="button ihaveit continue" track-event="card-welcome-iamin" onclick="return iHaveIt()">Ik doe mee!</button>
+        </p>
+    </div>
+    <div class="" onclick="moveDown('.moreinfo')" track-event="card-welcome-arrow-down">
+        <a class="arrow"></a>
+    </div>
+    <div class="moreinfo info">
+        <h3>Wat is dit?</h3>
+        <p>
+            Nederlanders zijn steeds meer indiviualistisch. Het is tegenwoordig zelfs gek als een vreemde je een fijne dag wenst...
+        </p>
+        <p>ProjectSmile.nl is een zeer eenvoudig non-profit initatief opgezet door
+            <a href="https://www.linkedin.com/in/sdg91" target="_blank">Sander de Groot</a>.
+            De missie? Het met kleine gebaren mensen helpen of blij maken!
+        </p>
+
+        <p>
+            <button class="button ihaveit continue" track-event="card-welcome-iamin" onclick="return iHaveIt()">Ik doe mee!</button>
         </p>
     </div>
 </div>
@@ -108,12 +126,12 @@
         return false; // do not follow the link
     }
 
-    function moveDown() {
-        document.querySelector('.information').scrollIntoView({ behavior: 'smooth' });
+    function moveDown(to) {
+        document.querySelector(to).scrollIntoView({behavior: 'smooth'});
 
     }
 
-    window.addEventListener('scroll', function() {
+    window.addEventListener('scroll', function () {
         document.querySelector('.arrow').classList.remove('bounce');
         document.querySelector('.arrow').classList.remove('bounce');
     });
