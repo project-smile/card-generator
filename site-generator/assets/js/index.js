@@ -17,6 +17,18 @@
     };
     req.send();
 
+    function onRegistrationClick(reg, marker) {
+        var content = '<h3>'+(reg.firstName?reg.firstName:'Anoniem')+'</h3>';
+        if (reg.selfieUri) {
+            content += '<p><img src="' + reg.selfieUri + '" alt="Selfie" /></p>';
+        }
+
+        var infowindow = new google.maps.InfoWindow({
+            content: content
+        });
+        infowindow.open(map, marker);
+    }
+
 
     function addRegistrations() {
         if (map != null && registrations != null) {
@@ -26,9 +38,12 @@
                 if (reg.location_latitude && reg.location_longitude) {
                     var marker = new google.maps.Marker({
                         position: {lat: reg.location_latitude, lng: reg.location_longitude},
-                        title: 'Click to zoom'
+                        title: reg.firstName ? reg.firstName : 'Anoniem'
                     });
                     markers.push(marker);
+                    marker.addListener('click', function() {
+                        onRegistrationClick(reg, marker);
+                    });
                     bounds.extend(marker.position);
 
                 }
