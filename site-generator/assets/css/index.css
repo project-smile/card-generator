@@ -46,10 +46,24 @@ body.full {
     background-repeat: no-repeat;
 }
 
+header {
+    /*background-color: rgba(244, 247, 246, 1) !important;*/
+    background-color: rgba(35, 44, 57, 1) !important;
+}
+
+main {
+    position: relative;
+}
+
 body.full #map {
     width: 100%;
     height: 100%;
+    position: absolute;
 
+}
+
+.mdl-layout-title img.logo {
+    height: 44px;
 }
 
 body.full > img.logo {
