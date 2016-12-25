@@ -111,6 +111,15 @@ body.full footer > {
     text-decoration: underline;
 }
 
+div.registrationPopup h3 {
+    font-size: 2em;
+    margin: 0;
+}
+
+div.registrationPopup img.selfie {
+    max-width: 10em;
+}
+
 @keyframes slideIn {
     from {
         top: 100%;
