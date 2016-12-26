@@ -2,6 +2,7 @@
 
 
     var map = null;
+    var oms = null; // overlapping map spider (multiple spots in one location)
     var registrations = null;
 
     var req = new XMLHttpRequest();
@@ -45,7 +46,7 @@
                         onRegistrationClick(reg, marker);
                     });
                     bounds.extend(marker.position);
-
+                    oms.addMarker(marker);
                 }
             });
 
@@ -392,6 +393,11 @@
 
         var mapElement = document.getElementById('map');
         map = new google.maps.Map(mapElement, mapOptions);
+
+        setTimeout(function() {
+            oms = new OverlappingMarkerSpiderfier(map);
+        });
+
     };
 
     return this;
@@ -401,3 +407,24 @@
 function initMap() {
     map.initMap();
 }
+
+
+window.setTimeout(function () {
+// TODO: only start the tour as soon as the drawer button is known
+    var tour = {
+        id: "hello-hopscotch",
+        steps: [
+            {
+                title: "Welkom!",
+                content: "<p>Op deze pagina kun je zien waar kaartjes zijn gesignaleerd. " +
+                "Klik op een icoon op de kaart om de bijbehorende selfie te zien!</p><p>Voor meer informatie, klik linksboven in het menu.</p>",
+                target: document.querySelector('.mdl-layout__drawer-button'),
+                placement: "bottom"
+            }
+        ]
+    };
+
+// Start the tour!
+    hopscotch.startTour(tour);
+
+}, 3000);
