@@ -32,7 +32,7 @@
 
 
     function addRegistrations() {
-        if (map != null && registrations != null) {
+        if (map != null && registrations != null && oms != null) {
             var markers = [];
             var bounds = new google.maps.LatLngBounds();
             registrations.forEach(function (reg) {
@@ -394,10 +394,14 @@
         var mapElement = document.getElementById('map');
         map = new google.maps.Map(mapElement, mapOptions);
 
-        setTimeout(function() {
-            oms = new OverlappingMarkerSpiderfier(map);
-        });
 
+        var script = document.createElement("script");
+        script.src = '/assets/js/oms.min.js';
+        script.onload = function() {
+            oms = new OverlappingMarkerSpiderfier(map);
+            addRegistrations();
+        };
+        document.body.appendChild(script);
     };
 
     return this;
