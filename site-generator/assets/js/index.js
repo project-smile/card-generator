@@ -21,7 +21,7 @@
     req.send();
 
     function onRegistrationClick(reg, marker) {
-        var content = '<div class="registrationPopup"><h3>' + (reg.firstName ? reg.firstName : 'Anoniem') + '</h3>';
+        var content = '<div class="registrationPopup"><h3>' + escapeUnsafe(reg.firstName ? reg.firstName : 'Anoniem') + '</h3>';
         if (reg.selfieUri) {
             content += '<p><img class="selfie" src="' + reg.selfieUri + '" alt="Selfie" /></p>';
         }

@@ -523,9 +523,8 @@ function initMap(formData) {
     var map = new google.maps.Map(mapElement, mapOptions);
 
     var infowindow = new google.maps.InfoWindow();
-    var naam = formData.firstname || 'Anoniem';
+    var naam = escapeUnsafe(formData.firstname || 'Anoniem');
     infowindow.setContent('<div><b>'+naam+'</b></div>');
-
 
     var marker = new google.maps.Marker({
         position: map.getCenter(),
@@ -537,4 +536,3 @@ function initMap(formData) {
     infowindow.open(map, marker);
 
 }
-
