@@ -4,6 +4,8 @@
     var map = null;
     var oms = null; // overlapping map spider (multiple spots in one location)
     var registrations = null;
+    var markers = [];
+    var infoWindow = null;
 
     var req = new XMLHttpRequest();
     req.open("GET", window.config.apiBaseUrl + "/card/-/registration", true);
@@ -24,16 +26,19 @@
             content += '<p><img class="selfie" src="' + reg.selfieUri + '" alt="Selfie" /></p>';
         }
         content += '</div>';
-        var infowindow = new google.maps.InfoWindow({
+
+        if (infoWindow) {
+            infoWindow.close();
+        }
+        infoWindow = new google.maps.InfoWindow({
             content: content
         });
-        infowindow.open(map, marker);
+        infoWindow.open(map, marker);
     }
 
 
     function addRegistrations() {
         if (map != null && registrations != null && oms != null) {
-            var markers = [];
             var bounds = new google.maps.LatLngBounds();
             registrations.forEach(function (reg) {
                 if (reg.location_latitude && reg.location_longitude) {
