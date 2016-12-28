@@ -50,6 +50,13 @@ function Registration() {
                 registration.formData.location = document.getElementById('location').value;
                 registration.formData.location_latitude = location.dataset.latitude ? parseFloat(location.dataset.latitude) : null;
                 registration.formData.location_longitude = location.dataset.longitude ? parseFloat(location.dataset.longitude) : null;
+
+                if (!registration.formData.location_latitude) {
+                    // missing info. Location data is required
+                    window.snackbar('Deze locatie is niet bekend. Probeer opnieuw');
+                    return;
+                }
+
                 gotoState('selfie');
             }
                 break;
